@@ -1,0 +1,130 @@
+
+
+/* landing */
+.landing-box {
+  padding: 40px;
+  width: 300px;	
+  border: 1px solid lightgray;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 80px;
+}
+
+.landing-logo-box {
+	margin-left: 22%;
+}
+
+.landing-logo {
+	width: 120px;
+	height: 120px;
+}
+
+.landing-go-request {
+	border: 1px solid gray;
+	border-radius: 50px;
+}
+
+/* border: 1px solid #0a66c2; */
+.landing-go-request:hover {
+	background-color: gray;
+}
+
+.landing-go-request-h6 {
+	margin-bottom: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.landing-go-request-h6:hover {
+	color: white;
+}
+
+
+
+
+
+
+/* login */
+.login-back-arrow {
+	margin-left: 20px;
+	margin-top: 20px;
+}
+
+.login-three-dots {
+	float: right;
+	margin-right: 20px;
+	margin-top: 20px;
+	
+}
+
+
+
+/* requestor */
+.requestor-hr {
+	color: lightgray;
+}
+
+.requestor-submit-btn {
+	float: right;
+	margin-top: 40px;
+	margin-bottom: 60px;
+}
+
+.btn {
+	padding-left: 3rem;
+	padding-right: 3rem;
+}
+
+
+
+
+/* access */
+.access-hr {
+	color: lightgray;
+}
+
+.access-submit {
+	float: right;
+}
+
+
+
+
+/* requestor-all-search */
+.requestor-all-box {
+	margin-top: 50px;
+}
+
+
+.requestor-all-search {
+	border-radius: 50px;
+	font-size: 15px;
+}
+
+
+.requestor-all-hover:hover {
+	border: 5px solid lightgray;
+}
+
+
+
+/* requestor-create */
+.requestor-create-see-all-request-hover {
+	margin: 0;
+}
+
+.requestor-create-see-all-request-hover:hover {
+	margin: 0;
+    border: 1px solid gray;
+    color: gray;
+    padding: 4px;
+	border-radius: 20px;
+}
+
+
+.requestor-create-padding {
+	padding-left: 15px;
+	padding-right: 14px;
+}
+
+

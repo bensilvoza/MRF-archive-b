@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- Bootstrap CSS -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+			crossorigin="anonymous"
+		/>
+
+		<!-- CSS only -->
+		<link rel="stylesheet" href="/css/styles.css" />
+
+		<title>Manpower Requisition Form</title>
+	</head>
+	<body>
+		<!-- Bootstrap icon   
+	<div class="text-center">
+	<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-layout-text-sidebar-reverse" viewBox="0 0 16 16">
+      <path d="M12.5 3a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5zm0 3a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5zm.5 3.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm-.5 2.5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5z"/>
+      <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2zM4 1v14H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h2zm1 0h9a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5V1z"/>
+    </svg>  
+	</div>  	
+	-->
+
+		<!-- back arrow -->
+		<div
+			class="login-back-arrow d-inline-block"
+			onclick="location.href='/requestor-all';"
+			style="cursor: pointer;"
+		>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="30"
+				height="30"
+				fill="currentColor"
+				class="bi bi-chevron-left"
+				viewBox="0 0 16 16"
+			>
+				<path
+					fill-rule="evenodd"
+					d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
+				/>
+			</svg>
+		</div>
+
+		<!-- home button -->
+		<!-- <div
+			class="login-back-arrow d-inline-block"
+			onclick="location.href='/';"
+			style="cursor: pointer;"
+		>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="30"
+				height="30"
+				fill="currentColor"
+				class="bi bi-house"
+				viewBox="0 0 16 16"
+			>
+				<path
+					fill-rule="evenodd"
+					d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"
+				/>
+				<path
+					fill-rule="evenodd"
+					d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"
+				/>
+			</svg>
+		</div> -->
+
+		<!-- three dots vertical -->
+		<div
+			class="d-inline-block login-three-dots"
+			data-bs-toggle="modal"
+			data-bs-target="#exampleModal"
+			style="cursor: pointer;"
+		>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="30"
+				height="30"
+				fill="currentColor"
+				class="bi bi-three-dots-vertical"
+				viewBox="0 0 16 16"
+			>
+				<path
+					d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"
+				/>
+			</svg>
+		</div>
+
+		<!-- Modal -->
+		<div
+			class="modal fade"
+			id="exampleModal"
+			tabindex="-1"
+			aria-labelledby="exampleModalLabel"
+			aria-hidden="true"
+		>
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<div onclick="location.href='/requestor-all';" style="cursor: pointer;">
+							<p class="requestor-create-see-all-request-hover">
+								See all request
+							</p>
+						</div>
+
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<h2 class="text-center mt-3">View Request</h2>
+		<div class="requestor-hr">
+			<hr />
+		</div>
+
+		<form>
+			<div class="container">
+				<div class="row justify-content-end mt-4">
+					<div class="col-md-7 requestor-create-padding">
+						
+						
+						
+						
+						
+					</div>
+				</div>
+				
+				<div class="row justify-content-end mt-1">
+					<div class="col-md-3">
+						<h6>
+							Control no.
+						</h6>
+					</div>
+
+					<div class="col-md-7">
+						<input readonly class="form-control form-control-lg" type="text"
+						value="<%= sendOneRequest["ID"] %>" />
+					</div>
+				</div>
+				
+
+				<div class="row justify-content-end mt-4">
+					<div class="col-md-3">
+						<h6>
+							BU Lead Name
+						</h6>
+					</div>
+
+					<div class="col-md-7">
+						<input readonly class="form-control form-control-lg" type="text"
+						value="<%= sendOneRequest["Bu Lead Name"] %>" />
+					</div>
+				</div>
+
+				<div class="row justify-content-end mt-4">
+					<div class="col-md-3">
+						<h6>
+							BU / SSU
+						</h6>
+					</div>
+
+					<div class="col-md-7">
+						<input readonly class="form-control form-control-lg" type="text"
+						value="<%= sendOneRequest["Bu / ssu"] %>" />
+					</div>
+				</div>
+
+				<div class="row justify-content-end mt-4">
+					<div class="col-md-3">
+						<h6>
+							Section / Department
+						</h6>
+					</div>
+
+					<div class="col-md-7">
+						<input readonly class="form-control form-control-lg" type="text"
+						value="<%= sendOneRequest["Section Department"] %>"
+						/>
+					</div>
+				</div>
+
+				<div class="row justify-content-end mt-4">
+					<div class="col-md-3">
+						<h6>
+							Position Title
+						</h6>
+					</div>
+
+					<div class="col-md-7">
+						<div class="form-group">
+							<input
+								readonly   
+								class="form-control form-control-lg"
+								type="text"
+								value="<%= sendOneRequest["Position Title"] %>"
+							/>
+						</div>
+					</div>
+				</div>
+
+				<div class="row justify-content-end mt-4">
+					<div class="col-md-3">
+						<h6>
+							Place of Assignment
+						</h6>
+					</div>
+
+					<div class="col-md-7">
+						<input
+							    readonly
+								class="form-control form-control-lg"
+								type="text"
+								value="<%= sendOneRequest["Place of Assignment"] %>"
+							/>
+					</div>
+				</div>
+
+				<div class="row justify-content-end mt-4">
+					<div class="col-md-3">
+						<h6>
+							Tools Needed
+						</h6>
+					</div>
+
+					<div class="col-md-7">
+						<input
+							    readonly
+								class="form-control form-control-lg"
+								type="text"
+								value="<%= sendOneRequest["Tools Needed"] %>"
+							/>
+					</div>
+				</div>
+
+				<div class="row justify-content-end mt-4">
+					<div class="col-md-3">
+						<h6>
+							Breif Description of The Job
+						</h6>
+					</div>
+
+					<div class="col-md-7">
+						<textarea
+							readonly	  
+							class="form-control"
+							id="exampleFormControlTextarea1"
+							rows="8"
+						> <%= sendOneRequest["Breif Description of The Job"] %> </textarea>
+					</div>
+				</div>
+
+				<div class="row justify-content-end mt-4">
+					<div class="col-md-3">
+						<h6>
+							Educational Degree / Certificate or License
+						</h6>
+					</div>
+
+					<div class="col-md-7">
+						<textarea
+							readonly	  
+							class="form-control"
+							id="exampleFormControlTextarea1"
+							rows="8"
+						> <%= sendOneRequest["Educational Degree"] %> </textarea>
+					</div>
+				</div>
+
+				<div class="row justify-content-end mt-4">
+					<div class="col-md-3">
+						<h6>
+							Specific Characteristic / Skills Needed
+						</h6>
+					</div>
+
+					<div class="col-md-7">
+						<textarea
+							readonly
+							class="form-control"
+							id="exampleFormControlTextarea1"
+							rows="8"
+						> <%= sendOneRequest["Specific Characteristic"] %> </textarea>
+					</div>
+				</div>
+
+				<div class="row justify-content-end mt-4">
+					<div class="col-md-3">
+						<h6>
+							Type of Employment
+						</h6>
+					</div>
+
+					<div class="col-md-7">
+						<input
+							    readonly
+								class="form-control form-control-lg"
+								type="text"
+								value="<%= sendOneRequest["Type of Employment"] %>"
+							/>
+					</div>
+				</div>
+
+				<div class="row justify-content-end mt-4">
+					<div class="col-md-3">
+						<h6>
+							Type of Request
+						</h6>
+					</div>
+
+					<div class="col-md-7">
+						<input
+							    readonly
+								class="form-control form-control-lg"
+								type="text"
+								value="<%= sendOneRequest["Type of Request"] %>"
+							/>
+					</div>
+				</div>
+
+				<div class="row justify-content-end mt-4">
+					<div class="col-md-3">
+						<h6>
+							Remarks
+						</h6>
+					</div>
+
+					<div class="col-md-7">
+						<textarea
+							readonly	  
+							class="form-control"
+							id="exampleFormControlTextarea1"
+							rows="8"
+						> <%= sendOneRequest["Remarks"] %> </textarea>
+					</div>
+				</div>
+				
+				
+				<br>
+				<br>
+				<br>
+				<br>
+
+			</div>
+		</form>
+
+		<!-- JavaScript Bundle with Popper -->
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+			crossorigin="anonymous"
+		></script>
+	</body>
+</html>
