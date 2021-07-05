@@ -152,9 +152,9 @@ app.post('/login', function (req, res) {
 			if (loginInput['email'] === roles[i]['email']) {
 				//finding his/her role
 				if (roles[i]['requestorRole'] === 'true') currentUserRole = 'requestor-create';
-				if (roles[i]['buRole'] === 'true') currentUserRole = 'bu';
-				if (roles[i]['hrRole'] === 'true') currentUserRole = 'hr';
-				if (roles[i]['ceoRole'] === 'true') currentUserRole = 'ceo';
+				if (roles[i]['buRole'] === 'true') currentUserRole = 'bu-all';
+				if (roles[i]['hrRole'] === 'true') currentUserRole = 'hr-all';
+				if (roles[i]['ceoRole'] === 'true') currentUserRole = 'ceo-all';
 			}
 
 			//if role is now have value break the loop
@@ -171,9 +171,9 @@ app.post('/login', function (req, res) {
 
 			//basically to add roleOpen to session
 			if (currentUserRole === 'requestor-create') req.session.requestorOpen = true;
-			if (currentUserRole === 'bu') req.session.buOpen = true;
-			if (currentUserRole === 'hr') req.session.hrOpen = true;
-			if (currentUserRole === 'ceo') req.session.ceoOpen = true;
+			if (currentUserRole === 'bu-all') req.session.buOpen = true;
+			if (currentUserRole === 'hr-all') req.session.hrOpen = true;
+			if (currentUserRole === 'ceo-all') req.session.ceoOpen = true;
 
 			return res.redirect('/' + currentUserRole);
 		} else {
@@ -481,14 +481,20 @@ app.get("/requestor-show-search", function (req, res){
 	//find the request with the ID provided
 	Requests.find({}, function (err, allRequest){
 		for (var oneRequest of allRequest){
-			 if (req.query.requestorSearchKeyword === oneRequest["ID"]) mongoid = oneRequest["ID"]
+			 if (req.query.requestorSearchKeyword === oneRequest["ID"]){
+				 mongoid = oneRequest["ID"]
+				 break
+			 }
 		}
 	})
 	
 	
 	setTimeout(function () {
 		//start here
-		console.log("/requestor-show-id/" + mongoid)
+		if (mongoid === undefined){
+			return res.redirect("back")
+		}
+		
 		res.redirect ("/requestor-show-id/" + mongoid)
 		//end here
 	}, 1000);
