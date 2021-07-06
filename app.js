@@ -84,14 +84,61 @@ var Requests = mongoose.model('Requests', requestsSchema);
 
 //================================
 //ROUTES
+
+//
+app.get("/variable", function (req, res){
+	return res.send("For testing only")
+	
+	countMe = "I am a string"
+	console.log(countMe)
+	
+	countMe = "I'm back to a number"
+	
+	console.log(countMe)
+	
+	console.log("I'm last")
+})
+
+///callback-testing-route
+app.get("/callback-testing-route", function (req, res){
+	console.log("1")
+	
+	for (var i = 1; i <= 5; i++){
+		 console.log("Log me five times")
+	}
+	
+	console.log("2")
+	
+	//callback function...
+	Register.find({}, function (err, credentials){
+		for (var credential of credentials){
+			 console.log(credential)
+		}
+		
+		
+		//Go to Access database and find these email => "joemax@yahoo.com"
+		//callback function...
+		Access.findOne({"email": "joemax@yahoo.com"}, function (err, role){
+			console.log(role)
+			
+			console.log("Last console logging..................................................")
+		})
+		
+	})
+	
+	
+	res.send("For testing only")
+})
+
 //root
 app.get('/', function (req, res) {
 	res.render('landing');
+	
 });
 
 //login
 app.get('/login', function (req, res) {
-	
+
 	//
 	if (req.session.loginIncorrectLoginCredentialsFaker === true){
 		//
@@ -100,7 +147,14 @@ app.get('/login', function (req, res) {
 		req.session.loginIncorrectLoginCredentials = false
 	}
 	
+	//Update the session, target the faker
+	req.session.loginIncorrectLoginCredentialsFaker = undefined
+
+	
 	res.render('login', {"loginIncorrectLoginCredentials": req.session.loginIncorrectLoginCredentials});
+	
+	//Below res.render("ejs file") req.session.something will not work
+	//
 });
 
 //login -> administrator section
@@ -248,6 +302,8 @@ app.get('/register', function (req, res) {
 		req.session.registerIncorrectLoginCredentials = false
 	}
 	
+	//Update the session, target the faker
+	req.session.registerIncorrectLoginCredentialsFaker = undefined
 	
 	res.render('register', {"registerIncorrectLoginCredentials": req.session.registerIncorrectLoginCredentials});
 });
@@ -263,6 +319,7 @@ app.post('/register', function (req, res) {
 		if (email) {
 			//check if password field is empty
 			if (req.body.password === "" || req.body.confirmPassword === ""){
+				req.session.registerIncorrectLoginCredentialsFaker = true
 				console.log("Password must not be empty")
 				return res.redirect("back")
 			}
@@ -305,6 +362,17 @@ app.get('/requestor-create', function (req, res) {
 	if (req.session.requestorOpen === undefined) return res.send('Unathorized access');
 
 	var requestorData = undefined;
+	
+	//
+	if (req.session.requestorCreateEmptyFieldsFaker === true){
+		//
+		req.session.requestorCreateEmptyFields = true
+	} else {
+		req.session.requestorCreateEmptyFields = false
+	}
+	
+	//Update the session, target the faker
+	req.session.requestorCreateEmptyFieldsFaker = undefined
 
 
 	//pull up data from access database with the email he/she provided
@@ -348,47 +416,47 @@ app.post('/requestor-create', function (req, res) {
 	//all fields are required (except remarks)
 	var empty = '';
 	if (req.body.buLeadName === empty){
-		req.session.requestorCreateEmptyFields = true
+		req.session.requestorCreateEmptyFieldsFaker = true
 	    return res.redirect('back');	
 	}
 	if (req.body.buSsu === empty){
-		req.session.requestorCreateEmptyFields = true
+		req.session.requestorCreateEmptyFieldsFaker = true
 		return res.redirect('back');
 	}
 	if (req.body.sectionDepartment === empty){
-		req.session.requestorCreateEmptyFields = true
+		req.session.requestorCreateEmptyFieldsFaker = true
 	    return res.redirect('back');	
 	}
 	if (req.body.positionTitle === empty){
-		req.session.requestorCreateEmptyFields = true
+		req.session.requestorCreateEmptyFieldsFaker = true
 		return res.redirect('back');
 	}
 	if (req.body.placeAssignment === 'Choose place of assignment...'){
-		req.session.requestorCreateEmptyFields = true
+		req.session.requestorCreateEmptyFieldsFaker = true
 		return res.redirect('back');
 	}
 	if (req.body.tools === 'Choose the tools needed...'){
-		req.session.requestorCreateEmptyFields = true
+		req.session.requestorCreateEmptyFieldsFaker = true
 		return res.redirect('back');
 	}
 	if (req.body.descriptionJob === empty){
-		req.session.requestorCreateEmptyFields = true
+		req.session.requestorCreateEmptyFieldsFaker = true
 		return res.redirect('back');
 	}
 	if (req.body.educationalDegree === empty){
-		req.session.requestorCreateEmptyFields = true
+		req.session.requestorCreateEmptyFieldsFaker = true
 		return res.redirect('back');
 	}
 	if (req.body.specificCharacteristic === empty){
-		req.session.requestorCreateEmptyFields = true
+		req.session.requestorCreateEmptyFieldsFaker = true
 		return res.redirect('back');
 	}
 	if (req.body.typeEmployment === 'Choose type of employment...'){
-		req.session.requestorCreateEmptyFields = true
+		req.session.requestorCreateEmptyFieldsFaker = true
 		return res.redirect('back');
 	}
 	if (req.body.typeRequest === 'Choose type of request...'){
-		req.session.requestorCreateEmptyFields = true
+		req.session.requestorCreateEmptyFieldsFaker = true
 		return res.redirect('back');
 	}
 
@@ -398,7 +466,7 @@ app.post('/requestor-create', function (req, res) {
 		for (var role of roles) {
 			if (role['email'] === req.session.email) req.session.emailofTheBu = role['buLeadEmail'];
 		}
-	});
+	
 	
 	//pull up date now
 	var currentDate = new Date();
@@ -446,6 +514,8 @@ app.post('/requestor-create', function (req, res) {
 
 	requestorInputSubmit.save();
 	res.redirect('/requestor-create-submitted');
+		
+	}); //code refactorization	
 });
 
 //request successfully submitted
@@ -522,7 +592,42 @@ app.get("/requestor-show-id/:id", function (req, res){
 	}, 1000);	
 	
 });
-//updated
+
+
+//bu
+//bu-all
+app.get("/bu-all", function (req, res){
+	
+	var sendManyRequest = []
+	
+	//Find all the request, Bu side
+	Requests.find({}, function (err, allRequest){
+		for (var oneRequest of allRequest){
+			 if (req.session.email === oneRequest['Email of The Bu']){
+				 sendManyRequest.push(oneRequest)
+			 }
+		}
+		
+		
+		res.render ("bu-all", {"sendManyRequest": sendManyRequest})
+	})
+})
+
+//bu-show-id
+app.get ("/bu-show-id/:id", function (req, res){
+    var sendOneRequest = undefined
+	var paramsUrl = req.params.id;
+	
+	//pull up data from Requests database from the ID he/she provided
+	Requests.find({}, function (err, allRequest){
+		for (var oneRequest of allRequest){
+			 if (oneRequest["ID"] === paramsUrl) sendOneRequest = oneRequest;
+		}
+		
+		//render
+		res.render("bu-show-id", {"sendOneRequest": sendOneRequest})
+	})
+})//end
 
 //app.listen
 //process.env.PORT, process.env.IP

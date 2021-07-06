@@ -27,7 +27,7 @@
 	-->
 
 		<!-- back arrow -->
-		<div
+		<!-- <div
 			class="login-back-arrow d-inline-block"
 			onclick="location.href='/requestor-create';"
 			style="cursor: pointer;"
@@ -45,8 +45,34 @@
 					d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
 				/>
 			</svg>
-		</div>
+		</div> -->
         <!-- end of back arrow -->
+		
+		
+		<!-- home button -->
+		<div
+			class="login-back-arrow d-inline-block"
+			onclick="location.href='/';"
+			style="cursor: pointer;"
+		>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="30"
+				height="30"
+				fill="currentColor"
+				class="bi bi-house"
+				viewBox="0 0 16 16"
+			>
+				<path
+					fill-rule="evenodd"
+					d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"
+				/>
+				<path
+					fill-rule="evenodd"
+					d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"
+				/>
+			</svg>
+		</div>
 		
 		
 		<!-- Three dots icon and dropdown inside -->
@@ -74,7 +100,7 @@
 
 			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 				
-				<li><a class="dropdown-item" href="/requestor-all">Refresh page</a></li>
+				<li><a class="dropdown-item" href="/bu-all">Refresh page</a></li>
 				<!-- <li><a class="dropdown-item" href="#">Another action</a></li>
 				<li><a class="dropdown-item" href="#">Something else here</a></li> -->
 				
@@ -177,26 +203,26 @@
 				</div>
 			</div>
 			
-			<% for (var requestorData of requestorDataAll){ %>
+			<% for (var oneRequest of sendManyRequest){ %>
 			
 			
-			<div class="row d-flex justify-content-center mt-1 requestor-all-hover" onclick="location.href='/requestor-show-id/<%= requestorData["ID"] %>'" style="cursor: pointer;">
+			<div class="row d-flex justify-content-center mt-1 requestor-all-hover" onclick="location.href='/bu-show-id/<%= oneRequest["ID"] %>'" style="cursor: pointer;">
 				
 				<div class="col-md-2 p-0">
 					<p>
-						<%= requestorData["Position Title"].substring(0,16) %>...
+						<%= oneRequest["Position Title"].substring(0,16) %>...
 					</p>
 				</div>
 				
 				<div class="col-md-6">
 					<p>
-						<%= requestorData["Breif Description of The Job"].substring(0,65) %>...
+						<%= oneRequest["Breif Description of The Job"].substring(0,65) %>...
 					</p>
 				</div>
 				
 				<div class="col-md-2 text-center">
 					<p style="text-align: end;">
-						<%= requestorData["Date Requested"] %>
+						<%= oneRequest["Date Requested"] %>
 					</p>
 				</div>
 			  
