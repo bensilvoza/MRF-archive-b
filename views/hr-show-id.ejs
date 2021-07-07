@@ -29,7 +29,7 @@
 		<!-- back arrow -->
 		<div
 			class="login-back-arrow d-inline-block"
-			onclick="location.href='/bu-all';"
+			onclick="location.href='/hr-all';"
 			style="cursor: pointer;"
 		>
 			<svg
@@ -147,7 +147,7 @@
 
 			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 				
-				<li><a class="dropdown-item" href="/bu-show-id/<%= sendOneRequest["ID"] %>">Refresh page</a></li>
+				<li><a class="dropdown-item" href="/hr-show-id/<%= oneRequest["ID"] %>">Refresh page</a></li>
 				<!-- <li><a class="dropdown-item" href="#">Another action</a></li>
 				<li><a class="dropdown-item" href="#">Something else here</a></li> -->
 				
@@ -162,7 +162,7 @@
 
 		
 		
-		<form action="/bu-show-id/<%= sendOneRequest["ID"] %>?_method=put" method="post">
+		<form action="/hr-show-id/<%= oneRequest["ID"] %>?_method=put" method="post">
 			<div class="container">
 				<div class="row justify-content-end mt-4">
 					<div class="col-md-7 requestor-create-padding">
@@ -183,7 +183,7 @@
 
 					<div class="col-md-7">
 						<input readonly class="form-control form-control-lg" type="text"
-						value="<%= sendOneRequest["ID"] %>" />
+						value="<%= oneRequest["ID"] %>" />
 					</div>
 				</div>
 				
@@ -197,7 +197,7 @@
 
 					<div class="col-md-7">
 						<input readonly class="form-control form-control-lg" type="text"
-						value="<%= sendOneRequest["Bu Lead Name"] %>" />
+						value="<%= oneRequest["Bu Lead Name"] %>" />
 					</div>
 				</div>
 
@@ -210,7 +210,7 @@
 
 					<div class="col-md-7">
 						<input readonly class="form-control form-control-lg" type="text"
-						value="<%= sendOneRequest["Bu / ssu"] %>" />
+						value="<%= oneRequest["Bu / ssu"] %>" />
 					</div>
 				</div>
 
@@ -223,7 +223,7 @@
 
 					<div class="col-md-7">
 						<input readonly class="form-control form-control-lg" type="text"
-						value="<%= sendOneRequest["Section Department"] %>"
+						value="<%= oneRequest["Section Department"] %>"
 						/>
 					</div>
 				</div>
@@ -241,7 +241,7 @@
 								readonly   
 								class="form-control form-control-lg"
 								type="text"
-								value="<%= sendOneRequest["Position Title"] %>"
+								value="<%= oneRequest["Position Title"] %>"
 							/>
 						</div>
 					</div>
@@ -259,7 +259,7 @@
 							    readonly
 								class="form-control form-control-lg"
 								type="text"
-								value="<%= sendOneRequest["Place of Assignment"] %>"
+								value="<%= oneRequest["Place of Assignment"] %>"
 							/>
 					</div>
 				</div>
@@ -276,7 +276,7 @@
 							    readonly
 								class="form-control form-control-lg"
 								type="text"
-								value="<%= sendOneRequest["Tools Needed"] %>"
+								value="<%= oneRequest["Tools Needed"] %>"
 							/>
 					</div>
 				</div>
@@ -294,7 +294,7 @@
 							class="form-control"
 							id="exampleFormControlTextarea1"
 							rows="8"
-						> <%= sendOneRequest["Breif Description of The Job"] %> </textarea>
+						> <%= oneRequest["Breif Description of The Job"] %> </textarea>
 					</div>
 				</div>
 
@@ -311,7 +311,7 @@
 							class="form-control"
 							id="exampleFormControlTextarea1"
 							rows="8"
-						> <%= sendOneRequest["Educational Degree"] %> </textarea>
+						> <%= oneRequest["Educational Degree"] %> </textarea>
 					</div>
 				</div>
 
@@ -328,7 +328,7 @@
 							class="form-control"
 							id="exampleFormControlTextarea1"
 							rows="8"
-						> <%= sendOneRequest["Specific Characteristic"] %> </textarea>
+						> <%= oneRequest["Specific Characteristic"] %> </textarea>
 					</div>
 				</div>
 
@@ -344,7 +344,7 @@
 							    readonly
 								class="form-control form-control-lg"
 								type="text"
-								value="<%= sendOneRequest["Type of Employment"] %>"
+								value="<%= oneRequest["Type of Employment"] %>"
 							/>
 					</div>
 				</div>
@@ -361,7 +361,7 @@
 							    readonly
 								class="form-control form-control-lg"
 								type="text"
-								value="<%= sendOneRequest["Type of Request"] %>"
+								value="<%= oneRequest["Type of Request"] %>"
 							/>
 					</div>
 				</div>
@@ -379,7 +379,7 @@
 							class="form-control"
 							id="exampleFormControlTextarea1"
 							rows="8"
-						> <%= sendOneRequest["Remarks"] %> </textarea>
+						> <%= oneRequest["Remarks"] %> </textarea>
 					</div>
 				</div>
 				
@@ -393,34 +393,34 @@
 				<div class="row justify-content-end mt-4">
 					<div class="col-md-3">
 						<h6>
-							Bu Approval
+							Hr Approval
 						</h6>
 					</div>
 
 					<div class="col-md-7">
-						<% if (sendOneRequest["Bu Approval"] === ""){ %>
-						<select name="buApproval" class="form-control form-control-lg">
+						<% if (oneRequest["Hr Approval"] === ""){ %>
+						<select name="hrApproval" class="form-control form-control-lg">
 							<option>Approve or Decline...</option>
 							<option>Approve</option>
 							<option>Decline</option>
 						</select>
 						<% } %>
 						
-						<% if (sendOneRequest["Bu Approval"] === "Approve"){ %>
+						<% if (oneRequest["Hr Approval"] === "Approve"){ %>
 						<input
 							readonly
 							class="form-control form-control-lg"
 							type="text"
-							value="<%= sendOneRequest["Bu Approval"] %>"
+							value="<%= oneRequest["Bu Approval"] %>"
 						/>
 						<% } %>
 						
-						<% if (sendOneRequest["Bu Approval"] === "Decline"){ %>
+						<% if (oneRequest["Hr Approval"] === "Decline"){ %>
 						<input
 							readonly
 							class="form-control form-control-lg"
 							type="text"
-							value="<%= sendOneRequest["Bu Approval"] %>"
+							value="<%= oneRequest["Bu Approval"] %>"
 						/>
 						<% } %>
 						
@@ -428,7 +428,7 @@
 					</div>
 				</div>
 				
-				<% if (sendOneRequest["Bu Approval"] === ""){ %>
+				<% if (oneRequest["Hr Approval"] === ""){ %>
 				<div class="float-end mt-2">
 					<button type="submit" class="btn btn-secondary">Submit</button>
 				</div>

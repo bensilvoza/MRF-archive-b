@@ -76,6 +76,10 @@ var requestsSchema = new mongoose.Schema({
 	'Email of The Requestor': String,
 	'Email of The Bu': String,
 	'Date Requested': String,
+	
+	"Bu Approval": String,
+	"Hr Approval": String,
+	"Ceo Approval": String
 });
 var Requests = mongoose.model('Requests', requestsSchema);
 
@@ -510,12 +514,15 @@ app.post('/requestor-create', function (req, res) {
 		'Email of The Requestor': req.session.email,
 		'Email of The Bu': req.session.emailofTheBu,
 		'Date Requested': date,
+		"Bu Approval": "",
+		"Hr Approval": "",
+		"Ceo Approval": ""
 	});
 
 	requestorInputSubmit.save();
 	res.redirect('/requestor-create-submitted');
 		
-	}); //code refactorization	
+	}); //code refactorization
 });
 
 //request successfully submitted
@@ -628,6 +635,114 @@ app.get ("/bu-show-id/:id", function (req, res){
 		res.render("bu-show-id", {"sendOneRequest": sendOneRequest})
 	})
 })//end
+
+
+//update
+app.put("/bu-show-id/:id", function(req, res){
+	
+	var paramsUrl = req.params.id
+	console.log(req.body.buApproval)
+	
+	Requests.findOne({"ID": paramsUrl}, function(error, oneRequest){
+		
+		//If there's potential error
+		if (error){
+			console.log(error)
+			return res.redirect("back")
+		}
+		
+		oneRequest["Bu Approval"] = req.body.buApproval
+		
+		Requests.findOneAndUpdate({"ID": paramsUrl}, oneRequest, function (error, oneRequest){
+			
+			//If there's potential error
+			if (error){
+			    console.log(error)
+			    return res.redirect("back")
+		    }
+			
+			res.redirect("/bu-request-responded")
+		})
+		
+	})
+
+	
+})
+
+//bu-request-responded
+app.get("/bu-request-responded", function (req, res){
+	res.render("bu-request-responded")
+})
+
+
+//Hr
+//All request
+app.get("/hr-all", function (req, res){
+	
+	//
+	var hrRequests = []
+	
+	//
+	Requests.find({}, function (error, allRequest){
+		
+		//If there's potential error
+		if (error) return res.send("Something went wrong")
+		
+		for (var oneRequest of allRequest){
+			 if (oneRequest["Bu Approval"] === "Approve"){
+				 hrRequests.push(oneRequest)
+			 }
+		}
+		
+		//update
+		allRequest = hrRequests
+		
+		res.render("hr-all", {"allRequest": allRequest})
+	})
+})
+
+//
+app.get("/hr-show-id/:id", function (req, res){
+	var paramsUrl = req.params.id
+	
+	//
+	Requests.findOne({"ID": paramsUrl}, function (error, oneRequest){
+		
+		//If there's potential error
+		if (error) return res.send("Something went wrong")
+		
+		res.render("hr-show-id", {"oneRequest": oneRequest})
+	})
+	
+})
+
+//Hr
+//Update
+app.put("/hr-show-id/:id", function (req, res){
+	var paramsUrl = req.params.id
+	
+	//
+	Requests.findOne({"ID": paramsUrl}, function (error, oneRequest){
+		
+		oneRequest["Hr Approval"] = req.body.hrApproval
+		
+		//
+		Requests.findOneAndUpdate({"ID": paramsUrl}, oneRequest, function (error){
+			//If there's potential error
+			if (error) return res.send("Something went wrong")
+			
+			res.redirect("/hr-request-responded")
+		})
+	})
+})
+
+//Hr
+//Request Succesfully Responded
+app.get("/hr-request-responded", function (req, res){
+	res.render("hr-request-responded")
+})
+
+
 
 //app.listen
 //process.env.PORT, process.env.IP

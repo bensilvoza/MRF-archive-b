@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- Bootstrap CSS -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+			crossorigin="anonymous"
+		/>
+
+		<!-- CSS only -->
+		<link rel="stylesheet" href="/css/styles.css" />
+
+		<title>Manpower Requisition Form</title>
+	</head>
+	<body>
+		<!-- Bootstrap icon   
+	<div class="text-center">
+	<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-layout-text-sidebar-reverse" viewBox="0 0 16 16">
+      <path d="M12.5 3a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5zm0 3a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5zm.5 3.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm-.5 2.5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5z"/>
+      <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2zM4 1v14H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h2zm1 0h9a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5V1z"/>
+    </svg>  
+	</div>  	
+	-->
+
+		<!-- back arrow -->
+		<!-- <div
+			class="login-back-arrow d-inline-block"
+			onclick="location.href='/requestor-create';"
+			style="cursor: pointer;"
+		>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="30"
+				height="30"
+				fill="currentColor"
+				class="bi bi-chevron-left"
+				viewBox="0 0 16 16"
+			>
+				<path
+					fill-rule="evenodd"
+					d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
+				/>
+			</svg>
+		</div> -->
+        <!-- end of back arrow -->
+		
+		
+		<!-- home button -->
+		<div
+			class="login-back-arrow d-inline-block"
+			onclick="location.href='/';"
+			style="cursor: pointer;"
+		>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="30"
+				height="30"
+				fill="currentColor"
+				class="bi bi-house"
+				viewBox="0 0 16 16"
+			>
+				<path
+					fill-rule="evenodd"
+					d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"
+				/>
+				<path
+					fill-rule="evenodd"
+					d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"
+				/>
+			</svg>
+		</div>
+		
+		
+		<!-- Three dots icon and dropdown inside -->
+		<div class="d-inline-block login-three-dots">
+			
+			<div
+				style="cursor: pointer;"
+				id="dropdownMenuButton1"
+				data-bs-toggle="dropdown"
+				aria-expanded="false"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="30"
+					height="30"
+					fill="currentColor"
+					class="bi bi-three-dots-vertical"
+					viewBox="0 0 16 16"
+				>
+					<path
+						d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"
+					/>
+				</svg>
+			</div>
+
+			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+				
+				<li><a class="dropdown-item" href="/hr-all">Refresh page</a></li>
+				<!-- <li><a class="dropdown-item" href="#">Another action</a></li>
+				<li><a class="dropdown-item" href="#">Something else here</a></li> -->
+				
+			</ul>
+			
+		</div> <!-- End of three dots icon and dropdown inside -->
+	
+		
+		<div class="container">
+			
+		  <div class="requestor-all-box">
+			<div class="row d-flex justify-content-center">
+				<div class="col-md-6">
+					
+					<form action="/requestor-show-search" method="get" autocomplete="off">
+						
+						<div class="form-group">
+							<input
+								class="form-control form-control-lg requestor-all-search"
+								type="text"
+								name="requestorSearchKeyword"
+								placeholder="Search ID or type a keyword"
+							/>
+						</div>
+						
+					</form>
+					
+				</div>
+			</div>
+			  
+			<!-- Search helper icons   -->
+			<div class="row d-flex justify-content-center">
+				<div class="col-md-6">
+					
+					<!-- nested div -->
+					<div class="d-flex justify-content-between">
+						
+						<p>
+							
+							<span> 
+							  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                              </svg> 
+							</span>
+							
+							<span>All</span>
+						</p>
+						
+						<p>
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-text" viewBox="0 0 16 16">
+                              <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                              <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
+                            </svg>
+							
+							<span>Pending</span>
+						</p>
+						
+						<p>
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-square" viewBox="0 0 16 16">
+                              <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                              <path d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.235.235 0 0 1 .02-.022z"/>
+                            </svg>
+							
+							<span>Approved</span>
+						</p>
+						
+						<p>
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
+                              <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                              <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+							
+							<span>Declined</span>
+						</p>
+					</div>
+					
+				</div>
+			  </div>  
+			  
+		  </div>	  
+		</div>
+		
+		<hr class="requestor-all-hr">
+		
+		
+		<div class="container mt-5">
+			
+			<div class="row" style="margin-bottom: 20px;">
+				
+				<div class="col-md-3 text-center">
+					<strong>Position Title</strong>
+				</div>
+				
+				<div class="col-md-6 text-center">
+					<strong>Breif Description of the Job</strong>
+				</div>
+				
+				<div class="col-md-3 text-center">
+					<strong>Date Requested</strong>
+				</div>
+			</div>
+			
+			<% for (var oneRequest of allRequest){ %>
+			
+			
+			<div class="row d-flex justify-content-center mt-1 requestor-all-hover" onclick="location.href='/hr-show-id/<%= oneRequest["ID"] %>'" style="cursor: pointer;">
+				
+				<div class="col-md-2 p-0">
+					<p>
+						<%= oneRequest["Position Title"].substring(0,16) %>...
+					</p>
+				</div>
+				
+				<div class="col-md-6">
+					<p>
+						<%= oneRequest["Breif Description of The Job"].substring(0,65) %>...
+					</p>
+				</div>
+				
+				<div class="col-md-2 text-center">
+					<p style="text-align: end;">
+						<%= oneRequest["Date Requested"] %>
+					</p>
+				</div>
+			  
+			</div>
+			
+			<% } %>
+			
+			
+			
+			
+		</div>
+
+		
+		
+		<!-- JavaScript Bundle with Popper -->
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+			crossorigin="anonymous"
+		></script>
+	</body>
+</html>
