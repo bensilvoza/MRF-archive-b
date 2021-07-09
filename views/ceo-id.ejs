@@ -29,7 +29,7 @@
 		<!-- back arrow -->
 		<div
 			class="login-back-arrow d-inline-block"
-			onclick="location.href='/hr-all';"
+			onclick="location.href='/ceo-all';"
 			style="cursor: pointer;"
 		>
 			<svg
@@ -147,7 +147,7 @@
 
 			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 				
-				<li><a class="dropdown-item" href="/hr-show-id/<%= oneRequest["ID"] %>">Refresh page</a></li>
+				<li><a class="dropdown-item" href="/ceo-id/<%= oneRequest["ID"] %>">Refresh page</a></li>
 				<!-- <li><a class="dropdown-item" href="#">Another action</a></li>
 				<li><a class="dropdown-item" href="#">Something else here</a></li> -->
 				
@@ -162,7 +162,7 @@
 
 		
 		
-		<form action="/hr-show-id/<%= oneRequest["ID"] %>?_method=put" method="post">
+		<form action="/ceo-id/<%= oneRequest["ID"] %>?_method=put" method="post">
 			<div class="container">
 				<div class="row justify-content-end mt-4">
 					<div class="col-md-7 requestor-create-padding">
@@ -393,34 +393,34 @@
 				<div class="row justify-content-end mt-4">
 					<div class="col-md-3">
 						<h6>
-							Hr Approval
+							Ceo Approval
 						</h6>
 					</div>
 
 					<div class="col-md-7">
-						<% if (oneRequest["Hr Approval"] === ""){ %>
-						<select name="hrApproval" class="form-control form-control-lg">
+						<% if (oneRequest["Ceo Approval"] === ""){ %>
+						<select name="ceoApproval" class="form-control form-control-lg">
 							<option>Approve or Decline...</option>
 							<option>Approve</option>
 							<option>Decline</option>
 						</select>
 						<% } %>
 						
-						<% if (oneRequest["Hr Approval"] === "Approve"){ %>
+						<% if (oneRequest["Ceo Approval"] === "Approve"){ %>
 						<input
 							readonly
 							class="form-control form-control-lg"
 							type="text"
-							value="<%= oneRequest["Bu Approval"] %>"
+							value="<%= oneRequest["Ceo Approval"] %>"
 						/>
 						<% } %>
 						
-						<% if (oneRequest["Hr Approval"] === "Decline"){ %>
+						<% if (oneRequest["Ceo Approval"] === "Decline"){ %>
 						<input
 							readonly
 							class="form-control form-control-lg"
 							type="text"
-							value="<%= oneRequest["Bu Approval"] %>"
+							value="<%= oneRequest["Ceo Approval"] %>"
 						/>
 						<% } %>
 						
@@ -428,7 +428,7 @@
 					</div>
 				</div>
 				
-				<% if (oneRequest["Hr Approval"] === ""){ %>
+				<% if (oneRequest["Ceo Approval"] === ""){ %>
 				<div class="float-end mt-2">
 					<button type="submit" class="btn btn-secondary">Submit</button>
 				</div>

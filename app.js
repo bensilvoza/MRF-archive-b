@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var session = require('express-session');
+var nodemailer = require('nodemailer');
 var app = express();
 
 //
@@ -92,11 +93,28 @@ var Requests = mongoose.model('Requests', requestsSchema);
 //ROUTES
 //root
 app.get('/', function (req, res) {
-	Requests.find({}, function (error, allRequest) {
-		console.log(allRequest);
-		return res.send(allRequest);
-	});
-	//res.render('landing');
+  var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'companynodemailer@gmail.com',
+    pass: 'CUtEQ_2%c]]=Tw-'
+  }
+});
+
+var mailOptions = {
+  from: '"Manpower Requisition Form" <companynodemailer@gmail.com>',
+  to: 'christiansilvoza@yahoo.com',
+  subject: 'Request waiting for response',
+  text: 'Mrf control number: 123456'
+};
+
+transporter.sendMail(mailOptions, function(error, info){
+  if (error) console.log(error);
+  else console.log('Email sent: ' + info.response);
+});
+	
+	
+	res.render('landing');
 });
 
 //login
@@ -190,12 +208,12 @@ app.post('/login', function (req, res) {
 
 			for (var i = 0; i < roles.length; i++) {
 				//  login data              Access data
-				if (loginInput['email'] === roles[i]['email']) {
+				if (loginInput['email'] === roles[i]['Email']) {
 					//finding his/her role
-					if (roles[i]['requestorRole'] === 'true') currentUserRole = 'requestor-create';
-					if (roles[i]['buRole'] === 'true') currentUserRole = 'bu-all';
-					if (roles[i]['hrRole'] === 'true') currentUserRole = 'hr-all';
-					if (roles[i]['ceoRole'] === 'true') currentUserRole = 'ceo-all';
+					if (roles[i]['Requestor role'] === 'true') currentUserRole = 'requestor-create';
+					if (roles[i]['Bu role'] === 'true') currentUserRole = 'bu-all';
+					if (roles[i]['Hr role'] === 'true') currentUserRole = 'hr-all';
+					if (roles[i]['Ceo role'] === 'true') currentUserRole = 'ceo-all';
 				}
 
 				//If role is now have value break the loop
@@ -323,9 +341,13 @@ app.post('/register', function (req, res) {
 	//Check if the inputed email is found on save all users database
 	//Callback 1
 	Official.find({}, function (error, roles) {
+		
+		//If there's potential error
+		if (error) return res.send("Something went wrong")
+		
 		var email = undefined;
 		for (var i = 0; i < roles.length; i++) {
-			if (roles[i]['email'] === req.body.email) {
+			if (roles[i]['Email'] === req.body.email) {
 				email = true;
 				break;
 			}
@@ -401,7 +423,7 @@ app.get('/requestor-create', function (req, res) {
 	//Callback 1
 	Official.find({}, function (err, roles) {
 		for (var role of roles) {
-			if (role['email'] === req.session.email) {
+			if (role['Email'] === req.session.email) {
 				requestorData = role;
 				break;
 			}
@@ -487,7 +509,7 @@ app.post('/requestor-create', function (req, res) {
 	//Callback 1
 	Official.find({}, function (err, roles) {
 		for (var role of roles) {
-			if (role['email'] === req.session.email) req.session.emailofTheBu = role['buLeadEmail'];
+			if (role['Email'] === req.session.email) req.session.emailofTheBu = role['Bu lead email'];
 		}
 
 		//pull up date now
@@ -542,7 +564,7 @@ app.post('/requestor-create', function (req, res) {
 			//If there's potential error
 			if (error) return res.send("Something went wrong")
 			
-			res.redirect('/requestor-create-submitted');
+			res.redirect('/requestor-submitted');
 		});
 		//End of callback 2
 		
@@ -551,8 +573,8 @@ app.post('/requestor-create', function (req, res) {
 });
 
 //request successfully submitted
-app.get('/requestor-create-submitted', function (req, res) {
-	res.render('requestor-create-submitted');
+app.get('/requestor-submitted', function (req, res) {
+	res.render('requestor-submitted');
 });
 
 //All request, requestor side
@@ -600,7 +622,7 @@ app.get('/requestor-show-search', function (req, res) {
 			return res.redirect('back');
 		}
 
-		res.redirect('/requestor-show-id/' + mongoid);
+		res.redirect('/requestor-id/' + mongoid);
 		//end here
 	}, 1000);
 });
@@ -618,12 +640,13 @@ app.get('/requestor-id/:id', function (req, res) {
 		//If there's potential error
 		if (error) return res.send("Something went wrong")
 		
+		sendOneRequest = oneRequest
+		
 		//If nothing is found
 		if (sendOneRequest === undefined){
 			return res.redirect("back")
 		}
 		
-		sendOneRequest = oneRequest
 		
 		res.render('requestor-id', { sendOneRequest: sendOneRequest });
 	});
@@ -668,10 +691,11 @@ app.get('/bu-id/:id', function (req, res) {
 		//If there's potential error
 		if (error) return res.send("Something went wrong")
 		
+		sendOneRequest = oneRequest
+		
 		//If nothing found
 		if (sendOneRequest === undefined) return res.redirect("back")
 		
-		sendOneRequest = oneRequest
 		
 		res.render('bu-id', { sendOneRequest: sendOneRequest });
 		
@@ -745,21 +769,21 @@ app.get('/hr-all', function (req, res) {
 });
 
 //
-app.get('/hr-show-id/:id', function (req, res) {
+app.get('/hr-id/:id', function (req, res) {
 	var paramsUrl = req.params.id;
 
 	//
-	Requests.findOne({ ID: paramsUrl }, function (error, oneRequest) {
+	Requests.findOne({ "ID": paramsUrl }, function (error, oneRequest) {
 		//If there's potential error
 		if (error) return res.send('Something went wrong');
 
-		res.render('hr-show-id', { oneRequest: oneRequest });
+		res.render('hr-id', { oneRequest: oneRequest });
 	});
 });
 
 //Hr
 //Update
-app.put('/hr-show-id/:id', function (req, res) {
+app.put('/hr-id/:id', function (req, res) {
 	var paramsUrl = req.params.id;
 
 	//
@@ -771,16 +795,86 @@ app.put('/hr-show-id/:id', function (req, res) {
 			//If there's potential error
 			if (error) return res.send('Something went wrong');
 
-			res.redirect('/hr-request-responded');
+			res.redirect('/hr-responded');
 		});
 	});
 });
 
 //Hr
 //Request Succesfully Responded
-app.get('/hr-request-responded', function (req, res) {
-	res.render('hr-request-responded');
+app.get('/hr-responded', function (req, res) {
+	res.render('hr-responded');
 });
+
+//======================================
+//Ceo
+//All request, ceo side
+app.get("/ceo-all", function (req, res){
+	
+	//Callback 1
+	Requests.find({}, function (error, allRequest){
+		
+		//
+		var ceoRequests = []
+		
+		//If there's potential error
+		if (error) return res.send("Something went wrong")
+		
+		for (var oneRequest of allRequest){
+			 if (oneRequest["Hr Approval"] === "Approve"){
+				 ceoRequests.push(oneRequest)
+			 }
+		}
+		
+		//Update
+		allRequest = ceoRequests
+		
+		res.render("ceo-all", {"allRequest": allRequest})
+		
+	})
+})
+
+//
+app.get("/ceo-id/:id", function (req, res){
+	var paramsUrl = req.params.id;
+
+	//
+	Requests.findOne({ "ID": paramsUrl }, function (error, oneRequest) {
+		//If there's potential error
+		if (error) return res.send('Something went wrong');
+
+		res.render('ceo-id', { oneRequest: oneRequest });
+	});
+})
+
+
+//
+//Update
+app.put('/ceo-id/:id', function (req, res) {
+	var paramsUrl = req.params.id;
+
+	//Callback 1
+	Requests.findOne({ ID: paramsUrl }, function (error, oneRequest) {
+		oneRequest['Ceo Approval'] = req.body.ceoApproval;
+
+		//Callback 2
+		Requests.findOneAndUpdate({ ID: paramsUrl }, oneRequest, function (error) {
+			//If there's potential error
+			if (error) return res.send('Something went wrong');
+
+			res.redirect('/ceo-responded');
+		});
+		//End of callback 2
+		
+	});
+});
+
+
+//Succesfully Responded
+app.get('/ceo-responded', function (req, res) {
+	res.render('ceo-responded');
+});
+
 
 //app.listen
 //process.env.PORT, process.env.IP
