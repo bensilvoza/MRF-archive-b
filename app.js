@@ -810,8 +810,9 @@ app.put('/bu-id/:id', function (req, res) {
 					};
 
 					transporter.sendMail(mailOptions, function (error, info) {
-						if (error) console.log(error);
-						else console.log('Email sent: ' + info.response);
+						if (error) return res.send('Something went wrong');
+
+						console.log('Email sent: ' + info.response);
 					});
 					// End of nodemailer
 				}
@@ -938,17 +939,15 @@ app.put('/hr-id/:id', function (req, res) {
 				};
 
 				transporter.sendMail(mailOptions, function (error, info) {
-					if (error) return res.send("Something went wrong")
-					
+					if (error) return res.send('Something went wrong');
+
 					console.log('Email sent: ' + info.response);
-					
+
 					res.redirect('/hr-responded');
 				});
 				// End of nodemailer
-				
 			});
 			// End of callback 3
-			
 		});
 		// End of callback 2
 	});
@@ -985,7 +984,30 @@ app.get('/ceo-all', function (req, res) {
 	});
 });
 
-//
+//Search, ceo side
+app.get('/ceo-search/', function (req, res) {
+	var searchID = undefined;
+
+	//Find the single request from the keyword provided
+	Requests.find({}, function (error, allRequest) {
+		//If there's potential error
+		if (error) return res.send('Something went wrong');
+
+		//Accept ID
+		for (var oneRequest of allRequest) {
+			if (req.query.searchID === oneRequest['ID']) {
+				searchID = oneRequest['ID'];
+				break;
+			}
+		}
+
+		if (searchID === undefined) return res.redirect('back');
+
+		res.redirect('/ceo-id/' + searchID);
+	});
+});
+
+//show
 app.get('/ceo-id/:id', function (req, res) {
 	var paramsUrl = req.params.id;
 
@@ -1003,8 +1025,17 @@ app.get('/ceo-id/:id', function (req, res) {
 app.put('/ceo-id/:id', function (req, res) {
 	var paramsUrl = req.params.id;
 
+	//Temporary save the oneRequest data to pull up requestor and bu email
+	var requestorEmail = undefined;
+	var buEmail = undefined;
+
 	//Callback 1
 	Requests.findOne({ ID: paramsUrl }, function (error, oneRequest) {
+		//requestorEmail, buEmail
+		requestorEmail = oneRequest['Email of The Requestor'];
+		buEmail = oneRequest['Email of The Bu'];
+
+		//Update from approval
 		oneRequest['Ceo Approval'] = req.body.ceoApproval;
 
 		//Callback 2
@@ -1012,7 +1043,74 @@ app.put('/ceo-id/:id', function (req, res) {
 			//If there's potential error
 			if (error) return res.send('Something went wrong');
 
-			res.redirect('/ceo-responded');
+			//Pull hr emails
+			//Callback 3
+			Official.find({}, function (error, officialUsers) {
+				var hrEmails = [];
+
+				for (var officialUser of officialUsers) {
+					if (officialUser['Hr role'] === 'true') {
+						hrEmails.push(officialUser['Email']);
+					}
+				}
+
+				//Add all receiving email
+				hrEmails.push(requestorEmail);
+				hrEmails.push(buEmail);
+
+				var receivingEmails = hrEmails;
+
+				//Email subject, email body
+				var eSubject = undefined;
+				var eBody = undefined;
+
+				if (req.body.ceoApproval === 'Approve') {
+					eSubject = 'REQUEST APPROVED';
+					eBody = 'approved';
+				} else {
+					eSubject = 'REQUEST DECLINED';
+					eBody = 'declined';
+				}
+
+				// nodemailer starts here
+				var controlNumber = paramsUrl;
+				var url = 'https://mrf-ixndk.run-us-west2.goorm.io/';
+
+				var transporter = nodemailer.createTransport({
+					service: 'gmail',
+					auth: {
+						user: 'companynodemailer@gmail.com',
+						pass: 'CUtEQ_2%c]]=Tw-',
+					},
+				});
+
+				for (var i = 0; i < receivingEmails.length; i++) {
+					var mailOptions = {
+						from: '"Manpower Requisition Form" <companynodemailer@gmail.com>',
+						to: receivingEmails[i],
+						subject: eSubject,
+						html:
+							'<p>Manpower request is ' +
+							eBody +
+							', <br> Control number: ' +
+							controlNumber +
+							' <br><br><br> Visit the link <a href=' +
+							url +
+							'>here</a> </p>',
+					};
+
+					transporter.sendMail(mailOptions, function (error, info) {
+						//If there's potential error
+						if (error) return res.send('Something went wrong');
+
+						console.log('Email sent: ' + info.response);
+					});
+					// End of nodemailer
+				}
+
+				res.redirect('/ceo-responded');
+			});
+			// End of callback 3
 		});
 		//End of callback 2
 	});
