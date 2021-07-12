@@ -93,32 +93,8 @@ var Requests = mongoose.model('Requests', requestsSchema);
 //ROUTES
 //root
 app.get('/', function (req, res) {
-	// nodemailer starts here
-	//   var num = "115HJY"
-	//   var url = "https://www.google.com/"
-
-	//   var transporter = nodemailer.createTransport({
-	//   service: 'gmail',
-	//   auth: {
-	//     user: 'companynodemailer@gmail.com',
-	//     pass: 'CUtEQ_2%c]]=Tw-'
-	//   }
-	// });
-
-	// var mailOptions = {
-	//   from: '"Manpower Requisition Form" <companynodemailer@gmail.com>',
-	//   to: 'christiansilvoza@yahoo.com',
-	//   subject: 'Waiting for response',
-	//   //text: 'Mrf control number: 123456'
-	//   html: "<p>Manpower request is waiting for response, <br> Control number: "+num+" <br><br><br> Visit the link <a href="+url+">here</a> </p>"
-	// };
-
-	// transporter.sendMail(mailOptions, function(error, info){
-	//   if (error) console.log(error);
-	//   else console.log('Email sent: ' + info.response);
-	// });
-	// End of nodemailer
-
+	// nodemailer is copied from w3schools
+	
 	res.render('landing');
 });
 
@@ -631,7 +607,7 @@ app.get('/requestor-all', function (req, res) {
 			}
 		}
 
-		res.render('requestor-all', { requestorDataAll: requestorDataAll });
+		res.render('requestor-all', { requestorDataAll: requestorDataAll.reverse() });
 	});
 	//End of callback 1
 });
@@ -700,7 +676,7 @@ app.get('/bu-all', function (req, res) {
 			}
 		}
 
-		res.render('bu-all', { sendManyRequest: sendManyRequest });
+		res.render('bu-all', { sendManyRequest: sendManyRequest.reverse() });
 	});
 	//End of callback 1
 });
@@ -851,7 +827,7 @@ app.get('/hr-all', function (req, res) {
 		//Update
 		allRequest = hrRequests;
 
-		res.render('hr-all', { allRequest: allRequest });
+		res.render('hr-all', { allRequest: allRequest.reverse() });
 	});
 });
 
@@ -980,7 +956,7 @@ app.get('/ceo-all', function (req, res) {
 		//Update
 		allRequest = ceoRequests;
 
-		res.render('ceo-all', { allRequest: allRequest });
+		res.render('ceo-all', { allRequest: allRequest.reverse() });
 	});
 });
 

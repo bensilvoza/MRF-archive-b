@@ -168,6 +168,68 @@
 					<div class="col-md-7 requestor-create-padding">
 						
 						
+						<!-- Status start here -->
+						<% var statusColor = "light" %>
+						
+						<% if (oneRequest["Bu Approval"] === "Decline") statusColor = "danger" %>
+						<% if (oneRequest["Hr Approval"] === "Decline") statusColor = "danger" %>
+						<% if (oneRequest["Ceo Approval"] === "Decline") statusColor = "danger" %>
+						
+						<% if (oneRequest["Ceo Approval"] === "Approve") statusColor = "success" %>
+						
+						<% if (statusColor === "light"){ %>
+						       <% var border = "1px" %>
+						<% } else {%>
+						       <% var border = "0" %>
+						<% } %>
+						
+						<!-- Bu status -->
+						<% if (oneRequest["Bu Approval"] === ""){ %>
+							   <% var buStatus = "Pending" %>
+						<% } else { %>
+						       <% var buStatus = oneRequest["Bu Approval"] %>
+						<% } %>
+						
+						<!-- Hr status -->
+						<% if (oneRequest["Hr Approval"] === ""){ %>
+							   <% var hrStatus = "Pending" %>
+						<% } else { %>
+						       <% var hrStatus = oneRequest["Hr Approval"] %>
+						<% } %>
+						
+						<!-- Ceo status -->
+						<% if (oneRequest["Ceo Approval"] === ""){ %>
+							   <% var ceoStatus = "Pending" %>
+						<% } else { %>
+						       <% var ceoStatus = oneRequest["Ceo Approval"] %>
+						<% } %>
+						
+						<!-- If bu status is decline -->
+						<% if (oneRequest["Bu Approval"] === "Decline"){ %>
+							   <% hrStatus = "" %>
+						       <% ceoStatus = "" %>
+						<% } %>
+						
+						<!-- If Hr status is decline -->
+						<% if (oneRequest["Hr Approval"] === "Decline"){ %>
+						       <% ceoStatus = "" %>
+						<% } %>
+						
+						
+						<div class="alert alert-<%= statusColor %> alert-dismissible fade show" role="alert" style="border: <%= border %> solid black;">
+							<span class="me-5"><strong>STATUS</strong></span>
+							<span class="me-5">Bu: <%= buStatus %></span>
+							<span class="me-5">Hr: <%= hrStatus %></span>
+							<span class="me-5">Ceo: <%= ceoStatus %></span>     
+							<button
+								type="button"
+								class="btn-close"
+								data-bs-dismiss="alert"
+								aria-label="Close"
+							></button>
+						</div>
+						<!-- Status end here -->
+						
 						
 						
 						

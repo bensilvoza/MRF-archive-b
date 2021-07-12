@@ -147,7 +147,7 @@
 
 			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 				
-				<li><a class="dropdown-item" href="/bu-show-id/<%= sendOneRequest["ID"] %>">Refresh page</a></li>
+				<li><a class="dropdown-item" href="/bu-id/<%= sendOneRequest["ID"] %>">Refresh page</a></li>
 				<!-- <li><a class="dropdown-item" href="#">Another action</a></li>
 				<li><a class="dropdown-item" href="#">Something else here</a></li> -->
 				
@@ -168,6 +168,67 @@
 					<div class="col-md-7 requestor-create-padding">
 						
 						
+						<!-- Status start here -->
+						<% var statusColor = "light" %>
+						
+						<% if (sendOneRequest["Bu Approval"] === "Decline") statusColor = "danger" %>
+						<% if (sendOneRequest["Hr Approval"] === "Decline") statusColor = "danger" %>
+						<% if (sendOneRequest["Ceo Approval"] === "Decline") statusColor = "danger" %>
+						
+						<% if (sendOneRequest["Ceo Approval"] === "Approve") statusColor = "success" %>
+						
+						<% if (statusColor === "light"){ %>
+						       <% var border = "1px" %>
+						<% } else {%>
+						       <% var border = "0" %>
+						<% } %>
+						
+						<!-- Bu status -->
+						<% if (sendOneRequest["Bu Approval"] === ""){ %>
+							   <% var buStatus = "Pending" %>
+						<% } else { %>
+						       <% var buStatus = sendOneRequest["Bu Approval"] %>
+						<% } %>
+						
+						<!-- Hr status -->
+						<% if (sendOneRequest["Hr Approval"] === ""){ %>
+							   <% var hrStatus = "Pending" %>
+						<% } else { %>
+						       <% var hrStatus = sendOneRequest["Hr Approval"] %>
+						<% } %>
+						
+						<!-- Ceo status -->
+						<% if (sendOneRequest["Ceo Approval"] === ""){ %>
+							   <% var ceoStatus = "Pending" %>
+						<% } else { %>
+						       <% var ceoStatus = sendOneRequest["Ceo Approval"] %>
+						<% } %>
+						
+						<!-- If bu status is decline -->
+						<% if (sendOneRequest["Bu Approval"] === "Decline"){ %>
+							   <% hrStatus = "" %>
+						       <% ceoStatus = "" %>
+						<% } %>
+						
+						<!-- If Hr status is decline -->
+						<% if (sendOneRequest["Hr Approval"] === "Decline"){ %>
+						       <% ceoStatus = "" %>
+						<% } %>
+						
+						
+						<div class="alert alert-<%= statusColor %> alert-dismissible fade show" role="alert" style="border: <%= border %> solid black;">
+							<span class="me-5"><strong>STATUS</strong></span>
+							<span class="me-5">Bu: <%= buStatus %></span>
+							<span class="me-5">Hr: <%= hrStatus %></span>
+							<span class="me-5">Ceo: <%= ceoStatus %></span>     
+							<button
+								type="button"
+								class="btn-close"
+								data-bs-dismiss="alert"
+								aria-label="Close"
+							></button>
+						</div>
+						<!-- Status end here -->
 						
 						
 						
