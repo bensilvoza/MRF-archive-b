@@ -1015,7 +1015,95 @@ app.get('/hr-all', function (req, res) {
 
 		res.render('hr-all', { allRequest: allRequest.reverse() });
 	});
+	
+	
 });
+
+
+//hr-s-pending
+app.get("/hr-s-pending", function (req, res){
+	
+	var hrRequests = [];
+
+	//Callback 1
+	Requests.find({}, function (error, allRequest) {
+		//If there's potential error
+		if (error) return res.send('Something went wrong');
+
+		for (var oneRequest of allRequest) {
+			if (oneRequest['Bu Approval'] === 'Approve') {
+				
+				if (oneRequest["Hr Approval"] === ""){
+					hrRequests.push(oneRequest);
+				}
+			}
+		}
+
+		//Update
+		allRequest = hrRequests;
+
+		res.render('hr-all', { allRequest: allRequest.reverse() });
+	});
+	
+})
+
+
+//hr-s-approved
+app.get("/hr-s-approved", function (req, res){
+	
+	var hrRequests = [];
+
+	//Callback 1
+	Requests.find({}, function (error, allRequest) {
+		//If there's potential error
+		if (error) return res.send('Something went wrong');
+
+		for (var oneRequest of allRequest) {
+			if (oneRequest['Bu Approval'] === 'Approve') {
+				
+				if (oneRequest["Hr Approval"] === "Approve"){
+					hrRequests.push(oneRequest);
+				}
+			}
+		}
+
+		//Update
+		allRequest = hrRequests;
+
+		res.render('hr-all', { allRequest: allRequest.reverse() });
+	});
+	
+})
+
+
+//hr-s-declined
+app.get("/hr-s-declined", function (req, res){
+	
+	var hrRequests = [];
+
+	//Callback 1
+	Requests.find({}, function (error, allRequest) {
+		//If there's potential error
+		if (error) return res.send('Something went wrong');
+
+		for (var oneRequest of allRequest) {
+			if (oneRequest['Bu Approval'] === 'Approve') {
+				
+				if (oneRequest["Hr Approval"] === "Decline"){
+					hrRequests.push(oneRequest);
+				}
+			}
+		}
+
+		//Update
+		allRequest = hrRequests;
+
+		res.render('hr-all', { allRequest: allRequest.reverse() });
+	});
+	
+})
+
+
 
 //Search, hr side
 app.get('/hr-search/', function (req, res) {
@@ -1125,6 +1213,7 @@ app.get('/hr-responded', function (req, res) {
 //Ceo
 //All request, ceo side
 app.get('/ceo-all', function (req, res) {
+	
 	//Callback 1
 	Requests.find({}, function (error, allRequest) {
 		//
@@ -1144,7 +1233,100 @@ app.get('/ceo-all', function (req, res) {
 
 		res.render('ceo-all', { allRequest: allRequest.reverse() });
 	});
+	//End of callback 1
+	
 });
+
+
+//ceo-s-pending
+app.get("/ceo-s-pending", function (req, res){
+	
+	//Callback 1
+	Requests.find({}, function (error, allRequest) {
+		//
+		var ceoRequests = [];
+
+		//If there's potential error
+		if (error) return res.send('Something went wrong');
+
+		for (var oneRequest of allRequest) {
+			if (oneRequest['Hr Approval'] === 'Approve') {
+				
+				if (oneRequest["Ceo Approval"] === ""){
+					ceoRequests.push(oneRequest);
+				}
+			}
+		}
+
+		//Update
+		allRequest = ceoRequests;
+
+		res.render('ceo-all', { allRequest: allRequest.reverse() });
+	});
+	//End of callback 1
+	
+})
+
+
+//ceo-s-approved
+app.get("/ceo-s-approved", function (req, res){
+	
+	//Callback 1
+	Requests.find({}, function (error, allRequest) {
+		//
+		var ceoRequests = [];
+
+		//If there's potential error
+		if (error) return res.send('Something went wrong');
+
+		for (var oneRequest of allRequest) {
+			if (oneRequest['Hr Approval'] === 'Approve') {
+				
+				if (oneRequest["Ceo Approval"] === "Approve"){
+					ceoRequests.push(oneRequest);
+				}
+			}
+		}
+
+		//Update
+		allRequest = ceoRequests;
+
+		res.render('ceo-all', { allRequest: allRequest.reverse() });
+	});
+	//End of callback 1
+	
+})
+
+
+//ceo-s-declined
+app.get("/ceo-s-declined", function (req, res){
+	
+	//Callback 1
+	Requests.find({}, function (error, allRequest) {
+		//
+		var ceoRequests = [];
+
+		//If there's potential error
+		if (error) return res.send('Something went wrong');
+
+		for (var oneRequest of allRequest) {
+			if (oneRequest['Hr Approval'] === 'Approve') {
+				
+				if (oneRequest["Ceo Approval"] === "Decline"){
+					ceoRequests.push(oneRequest);
+				}
+			}
+		}
+
+		//Update
+		allRequest = ceoRequests;
+
+		res.render('ceo-all', { allRequest: allRequest.reverse() });
+	});
+	//End of callback 1
+	
+})
+
 
 //Search, ceo side
 app.get('/ceo-search/', function (req, res) {
