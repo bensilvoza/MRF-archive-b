@@ -148,12 +148,58 @@
 			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 				
 				<li><a class="dropdown-item" href="/requestor-id/<%= sendOneRequest["ID"] %>">Refresh page</a></li>
+				<li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal" style="cursor: pointer;">Delete request</a></li>
+				
+				
 				<!-- <li><a class="dropdown-item" href="#">Another action</a></li>
 				<li><a class="dropdown-item" href="#">Something else here</a></li> -->
 				
 			</ul>
 			
 		</div> <!-- End of three dots icon and dropdown inside -->
+		
+		
+		<!-- Modal for requestor delete -->
+		<form action="/requestor-delete/<%= sendOneRequest["ID"] %>?_method=delete" method="post" autocomplete="off">
+			<div
+				class="modal fade"
+				id="exampleModal"
+				tabindex="-1"
+				aria-labelledby="exampleModalLabel"
+				aria-hidden="true"
+			>
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+                            
+							<h6>
+								Type "DELETE" to proceed
+							</h6>
+							
+							<button
+								type="button"
+								class="btn-close"
+								data-bs-dismiss="modal"
+								aria-label="Close"
+							></button>
+						</div>
+
+						<div class="modal-body">
+							<input
+								class="form-control form-control-lg"
+								type="text"
+								name="requestorDelete"
+								
+							/>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-outline-danger">Delete</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<!-- end of modal for requestor delete -->
 		
 
 		<h2 class="text-center mt-3">View Request</h2>

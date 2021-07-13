@@ -612,6 +612,86 @@ app.get('/requestor-all', function (req, res) {
 	//End of callback 1
 });
 
+//requestor-s-pending
+app.get("/requestor-s-pending", function (req, res){
+	//pull up all data associated with this email, from Requests database
+	var requestorDataAll = [];
+
+	//Callback 1
+	Requests.find({}, function (error, getRequests) {
+		//If there's potential error
+		if (error) return res.send('Something went wrong');
+
+		for (var getRequest of getRequests) {
+			if (getRequest['Email of The Requestor'] === req.session.email) {
+				
+				if (getRequest["Ceo Approval"] === ""){
+					requestorDataAll.push(getRequest);
+				}
+			}
+		}
+
+		res.render('requestor-all', { requestorDataAll: requestorDataAll.reverse() });
+	});
+	//End of callback 1
+	
+})
+
+
+//requestor-s-approved
+app.get("/requestor-s-approved", function (req, res){
+	
+	//pull up all data associated with this email, from Requests database
+	var requestorDataAll = [];
+
+	//Callback 1
+	Requests.find({}, function (error, getRequests) {
+		//If there's potential error
+		if (error) return res.send('Something went wrong');
+
+		for (var getRequest of getRequests) {
+			if (getRequest['Email of The Requestor'] === req.session.email) {
+				
+				if (getRequest["Ceo Approval"] === "Approve"){
+					requestorDataAll.push(getRequest);
+				}
+			}
+		}
+
+		res.render('requestor-all', { requestorDataAll: requestorDataAll.reverse() });
+	});
+	//End of callback 1
+	
+})
+
+
+//requestor-s-declined
+app.get("/requestor-s-declined", function (req, res){
+	
+	//pull up all data associated with this email, from Requests database
+	var requestorDataAll = [];
+
+	//Callback 1
+	Requests.find({}, function (error, getRequests) {
+		//If there's potential error
+		if (error) return res.send('Something went wrong');
+
+		for (var getRequest of getRequests) {
+			if (getRequest['Email of The Requestor'] === req.session.email) {
+				
+				if (getRequest["Ceo Approval"] === "Decline"){
+					requestorDataAll.push(getRequest);
+				}
+			}
+		}
+
+		res.render('requestor-all', { requestorDataAll: requestorDataAll.reverse() });
+	});
+	//End of callback 1
+	
+})
+
+
 //Search, requestor side
 app.get('/requestor-search/', function (req, res) {
 	var searchID = undefined;
@@ -658,6 +738,31 @@ app.get('/requestor-id/:id', function (req, res) {
 	//End of callback 1
 });
 
+
+//Delete, requestor side
+app.delete("/requestor-delete/:id", function (req, res){
+	
+	//Check
+	if (req.body.requestorDelete !== "DELETE") return res.redirect("back")
+	
+	var paramsUrl = req.params.id
+	
+	Requests.findOneAndRemove({"ID": paramsUrl}, function (error){
+		
+		//If there's potential error
+		if (error) return res.redirect("back")
+		
+		res.redirect("/requestor-delete")
+	})
+})
+
+//
+app.get("/requestor-delete", function (req, res){
+	res.render("requestor-delete")
+})
+
+
+
 //======================================
 //Bu
 //bu-all
@@ -679,7 +784,88 @@ app.get('/bu-all', function (req, res) {
 		res.render('bu-all', { sendManyRequest: sendManyRequest.reverse() });
 	});
 	//End of callback 1
+	
 });
+
+
+//bu-s-pending
+app.get("/bu-s-pending", function (req, res){
+	
+	var sendManyRequest = [];
+
+	//Find all the request, Bu side
+	//Callback 1
+	Requests.find({}, function (error, allRequest) {
+		//If there's potential error
+		if (error) return res.send('Something went wrong');
+
+		for (var oneRequest of allRequest) {
+			if (req.session.email === oneRequest['Email of The Bu']) {
+				
+				if (oneRequest["Bu Approval"] === ""){
+					sendManyRequest.push(oneRequest);
+				}
+			}
+		}
+
+		res.render('bu-all', { sendManyRequest: sendManyRequest.reverse() });
+	});
+	//End of callback 1
+	
+})
+
+//bu-s-approved
+app.get("/bu-s-approved", function (req, res){
+	
+	var sendManyRequest = [];
+
+	//Find all the request, Bu side
+	//Callback 1
+	Requests.find({}, function (error, allRequest) {
+		//If there's potential error
+		if (error) return res.send('Something went wrong');
+
+		for (var oneRequest of allRequest) {
+			if (req.session.email === oneRequest['Email of The Bu']) {
+				
+				if (oneRequest["Bu Approval"] === "Approve"){
+					sendManyRequest.push(oneRequest);
+				}
+			}
+		}
+
+		res.render('bu-all', { sendManyRequest: sendManyRequest.reverse() });
+	});
+	//End of callback 1
+	
+})
+
+//bu-s-declined
+app.get("/bu-s-declined", function (req, res){
+	
+	var sendManyRequest = [];
+
+	//Find all the request, Bu side
+	//Callback 1
+	Requests.find({}, function (error, allRequest) {
+		//If there's potential error
+		if (error) return res.send('Something went wrong');
+
+		for (var oneRequest of allRequest) {
+			if (req.session.email === oneRequest['Email of The Bu']) {
+				
+				if (oneRequest["Bu Approval"] === "Decline"){
+					sendManyRequest.push(oneRequest);
+				}
+			}
+		}
+
+		res.render('bu-all', { sendManyRequest: sendManyRequest.reverse() });
+	});
+	//End of callback 1
+	
+})
+
 
 //Search, bu side
 app.get('/bu-search/', function (req, res) {
