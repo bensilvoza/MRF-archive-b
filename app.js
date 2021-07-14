@@ -94,12 +94,32 @@ var Requests = mongoose.model('Requests', requestsSchema);
 //root
 app.get('/', function (req, res) {
 	// nodemailer is copied from w3schools
-	
+
 	res.render('landing');
 });
 
 //login
 app.get('/login', function (req, res) {
+	
+	//if they are done logged in they can now redirect
+	if (req.session.requestorOpen === true){
+		return res.redirect('/requestor-create')
+	}
+	
+	if (req.session.buOpen === true){
+		return res.redirect('/bu-all')
+	}
+	
+	if (req.session.hrOpen === true){
+		return res.redirect('/hr-all')
+	}
+	
+	if (req.session.ceoOpen === true){
+		return res.redirect('/ceo-all')
+	}
+	
+	
+	
 	//Session for incorrect credentials
 	if (req.session.incorrectCredentialsFaker === true) {
 		req.session.incorrectCredentials = true;
@@ -381,7 +401,6 @@ app.post('/register', function (req, res) {
 //================================================
 //requestor
 app.get('/requestor-create', function (req, res) {
-	
 	//Go to session and check if authorize to enter
 	if (req.session.requestorOpen === undefined) return res.send('Unathorized access');
 
@@ -594,10 +613,9 @@ app.get('/requestor-submitted', function (req, res) {
 
 //All request, requestor side
 app.get('/requestor-all', function (req, res) {
-	
 	//Go to session and check if authorize to enter
 	if (req.session.requestorOpen === undefined) return res.send('Unathorized access');
-	
+
 	//pull up all data associated with this email, from Requests database
 	var requestorDataAll = [];
 
@@ -617,9 +635,8 @@ app.get('/requestor-all', function (req, res) {
 	//End of callback 1
 });
 
-
 //requestor-s-pending
-app.get("/requestor-s-pending", function (req, res){
+app.get('/requestor-s-pending', function (req, res) {
 	//pull up all data associated with this email, from Requests database
 	var requestorDataAll = [];
 
@@ -630,8 +647,7 @@ app.get("/requestor-s-pending", function (req, res){
 
 		for (var getRequest of getRequests) {
 			if (getRequest['Email of The Requestor'] === req.session.email) {
-				
-				if (getRequest["Ceo Approval"] === ""){
+				if (getRequest['Ceo Approval'] === '') {
 					requestorDataAll.push(getRequest);
 				}
 			}
@@ -640,13 +656,10 @@ app.get("/requestor-s-pending", function (req, res){
 		res.render('requestor-all', { requestorDataAll: requestorDataAll.reverse() });
 	});
 	//End of callback 1
-	
-})
-
+});
 
 //requestor-s-approved
-app.get("/requestor-s-approved", function (req, res){
-	
+app.get('/requestor-s-approved', function (req, res) {
 	//pull up all data associated with this email, from Requests database
 	var requestorDataAll = [];
 
@@ -657,8 +670,7 @@ app.get("/requestor-s-approved", function (req, res){
 
 		for (var getRequest of getRequests) {
 			if (getRequest['Email of The Requestor'] === req.session.email) {
-				
-				if (getRequest["Ceo Approval"] === "Approve"){
+				if (getRequest['Ceo Approval'] === 'Approve') {
 					requestorDataAll.push(getRequest);
 				}
 			}
@@ -667,13 +679,10 @@ app.get("/requestor-s-approved", function (req, res){
 		res.render('requestor-all', { requestorDataAll: requestorDataAll.reverse() });
 	});
 	//End of callback 1
-	
-})
-
+});
 
 //requestor-s-declined
-app.get("/requestor-s-declined", function (req, res){
-	
+app.get('/requestor-s-declined', function (req, res) {
 	//pull up all data associated with this email, from Requests database
 	var requestorDataAll = [];
 
@@ -684,8 +693,7 @@ app.get("/requestor-s-declined", function (req, res){
 
 		for (var getRequest of getRequests) {
 			if (getRequest['Email of The Requestor'] === req.session.email) {
-				
-				if (getRequest["Ceo Approval"] === "Decline"){
+				if (getRequest['Ceo Approval'] === 'Decline') {
 					requestorDataAll.push(getRequest);
 				}
 			}
@@ -694,9 +702,7 @@ app.get("/requestor-s-declined", function (req, res){
 		res.render('requestor-all', { requestorDataAll: requestorDataAll.reverse() });
 	});
 	//End of callback 1
-	
-})
-
+});
 
 //Search, requestor side
 app.get('/requestor-search/', function (req, res) {
@@ -723,10 +729,9 @@ app.get('/requestor-search/', function (req, res) {
 
 //Show one request, requestor side
 app.get('/requestor-id/:id', function (req, res) {
-	
 	//Go to session and check if authorize to enter
 	if (req.session.requestorOpen === undefined) return res.send('Unathorized access');
-	
+
 	var sendOneRequest = undefined;
 	var paramsUrl = req.params.id;
 
@@ -748,39 +753,33 @@ app.get('/requestor-id/:id', function (req, res) {
 	//End of callback 1
 });
 
-
 //Delete, requestor side
-app.delete("/requestor-delete/:id", function (req, res){
-	
+app.delete('/requestor-delete/:id', function (req, res) {
 	//Check
-	if (req.body.requestorDelete !== "DELETE") return res.redirect("back")
-	
-	var paramsUrl = req.params.id
-	
-	Requests.findOneAndRemove({"ID": paramsUrl}, function (error){
-		
+	if (req.body.requestorDelete !== 'DELETE') return res.redirect('back');
+
+	var paramsUrl = req.params.id;
+
+	Requests.findOneAndRemove({ ID: paramsUrl }, function (error) {
 		//If there's potential error
-		if (error) return res.redirect("back")
-		
-		res.redirect("/requestor-delete")
-	})
-})
+		if (error) return res.redirect('back');
+
+		res.redirect('/requestor-delete');
+	});
+});
 
 //
-app.get("/requestor-delete", function (req, res){
-	res.render("requestor-delete")
-})
-
-
+app.get('/requestor-delete', function (req, res) {
+	res.render('requestor-delete');
+});
 
 //======================================
 //Bu
 //bu-all
 app.get('/bu-all', function (req, res) {
-	
 	//Go to session and check if authorize to enter
 	if (req.session.buOpen === undefined) return res.send('Unathorized access');
-	
+
 	var sendManyRequest = [];
 
 	//Find all the request, Bu side
@@ -798,13 +797,10 @@ app.get('/bu-all', function (req, res) {
 		res.render('bu-all', { sendManyRequest: sendManyRequest.reverse() });
 	});
 	//End of callback 1
-	
 });
 
-
 //bu-s-pending
-app.get("/bu-s-pending", function (req, res){
-	
+app.get('/bu-s-pending', function (req, res) {
 	var sendManyRequest = [];
 
 	//Find all the request, Bu side
@@ -815,8 +811,7 @@ app.get("/bu-s-pending", function (req, res){
 
 		for (var oneRequest of allRequest) {
 			if (req.session.email === oneRequest['Email of The Bu']) {
-				
-				if (oneRequest["Bu Approval"] === ""){
+				if (oneRequest['Bu Approval'] === '') {
 					sendManyRequest.push(oneRequest);
 				}
 			}
@@ -825,12 +820,10 @@ app.get("/bu-s-pending", function (req, res){
 		res.render('bu-all', { sendManyRequest: sendManyRequest.reverse() });
 	});
 	//End of callback 1
-	
-})
+});
 
 //bu-s-approved
-app.get("/bu-s-approved", function (req, res){
-	
+app.get('/bu-s-approved', function (req, res) {
 	var sendManyRequest = [];
 
 	//Find all the request, Bu side
@@ -841,8 +834,7 @@ app.get("/bu-s-approved", function (req, res){
 
 		for (var oneRequest of allRequest) {
 			if (req.session.email === oneRequest['Email of The Bu']) {
-				
-				if (oneRequest["Bu Approval"] === "Approve"){
+				if (oneRequest['Bu Approval'] === 'Approve') {
 					sendManyRequest.push(oneRequest);
 				}
 			}
@@ -851,12 +843,10 @@ app.get("/bu-s-approved", function (req, res){
 		res.render('bu-all', { sendManyRequest: sendManyRequest.reverse() });
 	});
 	//End of callback 1
-	
-})
+});
 
 //bu-s-declined
-app.get("/bu-s-declined", function (req, res){
-	
+app.get('/bu-s-declined', function (req, res) {
 	var sendManyRequest = [];
 
 	//Find all the request, Bu side
@@ -867,8 +857,7 @@ app.get("/bu-s-declined", function (req, res){
 
 		for (var oneRequest of allRequest) {
 			if (req.session.email === oneRequest['Email of The Bu']) {
-				
-				if (oneRequest["Bu Approval"] === "Decline"){
+				if (oneRequest['Bu Approval'] === 'Decline') {
 					sendManyRequest.push(oneRequest);
 				}
 			}
@@ -877,9 +866,7 @@ app.get("/bu-s-declined", function (req, res){
 		res.render('bu-all', { sendManyRequest: sendManyRequest.reverse() });
 	});
 	//End of callback 1
-	
-})
-
+});
 
 //Search, bu side
 app.get('/bu-search/', function (req, res) {
@@ -907,10 +894,9 @@ app.get('/bu-search/', function (req, res) {
 //Show one request, Bu side
 //bu-id
 app.get('/bu-id/:id', function (req, res) {
-	
 	//Go to session and check if authorize to enter
 	if (req.session.buOpen === undefined) return res.send('Unathorized access');
-	
+
 	var sendOneRequest = undefined;
 	var paramsUrl = req.params.id;
 
@@ -933,6 +919,9 @@ app.get('/bu-id/:id', function (req, res) {
 app.put('/bu-id/:id', function (req, res) {
 	var paramsUrl = req.params.id;
 
+	//Pull up requestor email, if request is declined
+	var requestorEmailDeclined = undefined;
+
 	//Callback 1
 	Requests.findOne({ ID: paramsUrl }, function (error, oneRequest) {
 		//If there's potential error
@@ -940,6 +929,9 @@ app.put('/bu-id/:id', function (req, res) {
 			console.log(error);
 			return res.redirect('back');
 		}
+
+		//Pull up and save email of the requestor
+		requestorEmailDeclined = oneRequest['Email of The Requestor'];
 
 		oneRequest['Bu Approval'] = req.body.buApproval;
 
@@ -974,15 +966,15 @@ app.put('/bu-id/:id', function (req, res) {
 					},
 				});
 
-				//
-				for (var i = 0; i < hrEmails.length; i++) {
+				//If Bu approval is declined
+				if (req.body.buApproval === 'Decline') {
 					var mailOptions = {
 						from: '"Manpower Requisition Form" <companynodemailer@gmail.com>',
-						to: hrEmails[i],
-						subject: 'Waiting for response',
+						to: requestorEmailDeclined,
+						subject: 'REQUEST DECLINED',
 						//text: 'Mrf control number: 123456'
 						html:
-							'<p>Manpower request is waiting for response, <br> Control number: ' +
+							'<p>Manpower request is declined, <br> Control number: ' +
 							controlNumber +
 							' <br><br><br> Visit the link <a href=' +
 							url +
@@ -993,11 +985,35 @@ app.put('/bu-id/:id', function (req, res) {
 						if (error) return res.send('Something went wrong');
 
 						console.log('Email sent: ' + info.response);
-					});
-					// End of nodemailer
-				}
 
-				res.redirect('/bu-responded');
+						return res.redirect('/bu-responded');
+					});
+				}
+				//End, if Bu approval is declined
+
+				//
+				var mailOptions = {
+					from: '"Manpower Requisition Form" <companynodemailer@gmail.com>',
+					to: hrEmails,
+					subject: 'Waiting for response',
+					//text: 'Mrf control number: 123456'
+					html:
+						'<p>Manpower request is waiting for response, <br> Control number: ' +
+						controlNumber +
+						' <br><br><br> Visit the link <a href=' +
+						url +
+						'>here</a> </p>',
+				};
+
+				transporter.sendMail(mailOptions, function (error, info) {
+					//If there's potential error
+					if (error) return res.send('Something went wrong');
+
+					console.log('Email sent: ' + info.response);
+
+					res.redirect('/bu-responded');
+				});
+				// End of nodemailer
 			});
 			// End of callback 3
 		});
@@ -1015,10 +1031,9 @@ app.get('/bu-responded', function (req, res) {
 //Hr
 //All request, Hr side
 app.get('/hr-all', function (req, res) {
-	
 	//Go to session and check if authorize to enter
 	if (req.session.hrOpen === undefined) return res.send('Unathorized access');
-	
+
 	var hrRequests = [];
 
 	//Callback 1
@@ -1037,14 +1052,10 @@ app.get('/hr-all', function (req, res) {
 
 		res.render('hr-all', { allRequest: allRequest.reverse() });
 	});
-	
-	
 });
 
-
 //hr-s-pending
-app.get("/hr-s-pending", function (req, res){
-	
+app.get('/hr-s-pending', function (req, res) {
 	var hrRequests = [];
 
 	//Callback 1
@@ -1054,8 +1065,7 @@ app.get("/hr-s-pending", function (req, res){
 
 		for (var oneRequest of allRequest) {
 			if (oneRequest['Bu Approval'] === 'Approve') {
-				
-				if (oneRequest["Hr Approval"] === ""){
+				if (oneRequest['Hr Approval'] === '') {
 					hrRequests.push(oneRequest);
 				}
 			}
@@ -1066,13 +1076,10 @@ app.get("/hr-s-pending", function (req, res){
 
 		res.render('hr-all', { allRequest: allRequest.reverse() });
 	});
-	
-})
-
+});
 
 //hr-s-approved
-app.get("/hr-s-approved", function (req, res){
-	
+app.get('/hr-s-approved', function (req, res) {
 	var hrRequests = [];
 
 	//Callback 1
@@ -1082,8 +1089,7 @@ app.get("/hr-s-approved", function (req, res){
 
 		for (var oneRequest of allRequest) {
 			if (oneRequest['Bu Approval'] === 'Approve') {
-				
-				if (oneRequest["Hr Approval"] === "Approve"){
+				if (oneRequest['Hr Approval'] === 'Approve') {
 					hrRequests.push(oneRequest);
 				}
 			}
@@ -1094,13 +1100,10 @@ app.get("/hr-s-approved", function (req, res){
 
 		res.render('hr-all', { allRequest: allRequest.reverse() });
 	});
-	
-})
-
+});
 
 //hr-s-declined
-app.get("/hr-s-declined", function (req, res){
-	
+app.get('/hr-s-declined', function (req, res) {
 	var hrRequests = [];
 
 	//Callback 1
@@ -1110,8 +1113,7 @@ app.get("/hr-s-declined", function (req, res){
 
 		for (var oneRequest of allRequest) {
 			if (oneRequest['Bu Approval'] === 'Approve') {
-				
-				if (oneRequest["Hr Approval"] === "Decline"){
+				if (oneRequest['Hr Approval'] === 'Decline') {
 					hrRequests.push(oneRequest);
 				}
 			}
@@ -1122,10 +1124,7 @@ app.get("/hr-s-declined", function (req, res){
 
 		res.render('hr-all', { allRequest: allRequest.reverse() });
 	});
-	
-})
-
-
+});
 
 //Search, hr side
 app.get('/hr-search/', function (req, res) {
@@ -1152,10 +1151,9 @@ app.get('/hr-search/', function (req, res) {
 
 //show one request, hr side
 app.get('/hr-id/:id', function (req, res) {
-	
 	//Go to session and check if authorize to enter
 	if (req.session.hrOpen === undefined) return res.send('Unathorized access');
-	
+
 	var paramsUrl = req.params.id;
 
 	//
@@ -1172,8 +1170,16 @@ app.get('/hr-id/:id', function (req, res) {
 app.put('/hr-id/:id', function (req, res) {
 	var paramsUrl = req.params.id;
 
+	//Pull up the email of requestor and bu, declined purposes
+	var requestorEmailDeclined = undefined;
+	var buEmailDeclined = undefined;
+
 	//Callback 1
 	Requests.findOne({ ID: paramsUrl }, function (error, oneRequest) {
+		//save the email of requestor and bu, declined purposes
+		requestorEmailDeclined = oneRequest['Email of The Requestor'];
+		buEmailDeclined = oneRequest['Email of The Bu'];
+
 		oneRequest['Hr Approval'] = req.body.hrApproval;
 
 		//Update the selected request
@@ -1201,6 +1207,33 @@ app.put('/hr-id/:id', function (req, res) {
 						pass: 'CUtEQ_2%c]]=Tw-',
 					},
 				});
+
+				//If hr approval is declined
+				if (req.body.hrApproval === 'Decline') {
+					var declinedEmails = [];
+					declinedEmails.push(requestorEmailDeclined);
+					declinedEmails.push(buEmailDeclined);
+
+					var mailOptions = {
+						from: '"Manpower Requisition Form" <companynodemailer@gmail.com>',
+						to: declinedEmails,
+						subject: 'Waiting for response',
+						html:
+							'<p>Manpower request is waiting for response, <br> Control number: ' +
+							controlNumber +
+							' <br><br><br> Visit the link <a href=' +
+							url +
+							'>here</a> </p>',
+					};
+
+					transporter.sendMail(mailOptions, function (error, info) {
+						if (error) return res.send('Something went wrong');
+
+						console.log('Email sent: ' + info.response);
+
+						return res.redirect('/hr-responded');
+					});
+				}
 
 				var mailOptions = {
 					from: '"Manpower Requisition Form" <companynodemailer@gmail.com>',
@@ -1239,10 +1272,9 @@ app.get('/hr-responded', function (req, res) {
 //Ceo
 //All request, ceo side
 app.get('/ceo-all', function (req, res) {
-	
 	//Go to session and check if authorize to enter
 	if (req.session.ceoOpen === undefined) return res.send('Unathorized access');
-	
+
 	//Callback 1
 	Requests.find({}, function (error, allRequest) {
 		//
@@ -1263,13 +1295,10 @@ app.get('/ceo-all', function (req, res) {
 		res.render('ceo-all', { allRequest: allRequest.reverse() });
 	});
 	//End of callback 1
-	
 });
 
-
 //ceo-s-pending
-app.get("/ceo-s-pending", function (req, res){
-	
+app.get('/ceo-s-pending', function (req, res) {
 	//Callback 1
 	Requests.find({}, function (error, allRequest) {
 		//
@@ -1280,8 +1309,7 @@ app.get("/ceo-s-pending", function (req, res){
 
 		for (var oneRequest of allRequest) {
 			if (oneRequest['Hr Approval'] === 'Approve') {
-				
-				if (oneRequest["Ceo Approval"] === ""){
+				if (oneRequest['Ceo Approval'] === '') {
 					ceoRequests.push(oneRequest);
 				}
 			}
@@ -1293,13 +1321,10 @@ app.get("/ceo-s-pending", function (req, res){
 		res.render('ceo-all', { allRequest: allRequest.reverse() });
 	});
 	//End of callback 1
-	
-})
-
+});
 
 //ceo-s-approved
-app.get("/ceo-s-approved", function (req, res){
-	
+app.get('/ceo-s-approved', function (req, res) {
 	//Callback 1
 	Requests.find({}, function (error, allRequest) {
 		//
@@ -1310,8 +1335,7 @@ app.get("/ceo-s-approved", function (req, res){
 
 		for (var oneRequest of allRequest) {
 			if (oneRequest['Hr Approval'] === 'Approve') {
-				
-				if (oneRequest["Ceo Approval"] === "Approve"){
+				if (oneRequest['Ceo Approval'] === 'Approve') {
 					ceoRequests.push(oneRequest);
 				}
 			}
@@ -1323,13 +1347,10 @@ app.get("/ceo-s-approved", function (req, res){
 		res.render('ceo-all', { allRequest: allRequest.reverse() });
 	});
 	//End of callback 1
-	
-})
-
+});
 
 //ceo-s-declined
-app.get("/ceo-s-declined", function (req, res){
-	
+app.get('/ceo-s-declined', function (req, res) {
 	//Callback 1
 	Requests.find({}, function (error, allRequest) {
 		//
@@ -1340,8 +1361,7 @@ app.get("/ceo-s-declined", function (req, res){
 
 		for (var oneRequest of allRequest) {
 			if (oneRequest['Hr Approval'] === 'Approve') {
-				
-				if (oneRequest["Ceo Approval"] === "Decline"){
+				if (oneRequest['Ceo Approval'] === 'Decline') {
 					ceoRequests.push(oneRequest);
 				}
 			}
@@ -1353,9 +1373,7 @@ app.get("/ceo-s-declined", function (req, res){
 		res.render('ceo-all', { allRequest: allRequest.reverse() });
 	});
 	//End of callback 1
-	
-})
-
+});
 
 //Search, ceo side
 app.get('/ceo-search/', function (req, res) {
@@ -1382,10 +1400,9 @@ app.get('/ceo-search/', function (req, res) {
 
 //show
 app.get('/ceo-id/:id', function (req, res) {
-	
 	//Go to session and check if authorize to enter
 	if (req.session.ceoOpen === undefined) return res.send('Unathorized access');
-	
+
 	var paramsUrl = req.params.id;
 
 	//
