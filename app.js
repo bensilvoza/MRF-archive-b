@@ -381,6 +381,7 @@ app.post('/register', function (req, res) {
 //================================================
 //requestor
 app.get('/requestor-create', function (req, res) {
+	
 	//Go to session and check if authorize to enter
 	if (req.session.requestorOpen === undefined) return res.send('Unathorized access');
 
@@ -593,6 +594,10 @@ app.get('/requestor-submitted', function (req, res) {
 
 //All request, requestor side
 app.get('/requestor-all', function (req, res) {
+	
+	//Go to session and check if authorize to enter
+	if (req.session.requestorOpen === undefined) return res.send('Unathorized access');
+	
 	//pull up all data associated with this email, from Requests database
 	var requestorDataAll = [];
 
@@ -611,6 +616,7 @@ app.get('/requestor-all', function (req, res) {
 	});
 	//End of callback 1
 });
+
 
 //requestor-s-pending
 app.get("/requestor-s-pending", function (req, res){
@@ -717,6 +723,10 @@ app.get('/requestor-search/', function (req, res) {
 
 //Show one request, requestor side
 app.get('/requestor-id/:id', function (req, res) {
+	
+	//Go to session and check if authorize to enter
+	if (req.session.requestorOpen === undefined) return res.send('Unathorized access');
+	
 	var sendOneRequest = undefined;
 	var paramsUrl = req.params.id;
 
@@ -767,6 +777,10 @@ app.get("/requestor-delete", function (req, res){
 //Bu
 //bu-all
 app.get('/bu-all', function (req, res) {
+	
+	//Go to session and check if authorize to enter
+	if (req.session.buOpen === undefined) return res.send('Unathorized access');
+	
 	var sendManyRequest = [];
 
 	//Find all the request, Bu side
@@ -893,6 +907,10 @@ app.get('/bu-search/', function (req, res) {
 //Show one request, Bu side
 //bu-id
 app.get('/bu-id/:id', function (req, res) {
+	
+	//Go to session and check if authorize to enter
+	if (req.session.buOpen === undefined) return res.send('Unathorized access');
+	
 	var sendOneRequest = undefined;
 	var paramsUrl = req.params.id;
 
@@ -997,6 +1015,10 @@ app.get('/bu-responded', function (req, res) {
 //Hr
 //All request, Hr side
 app.get('/hr-all', function (req, res) {
+	
+	//Go to session and check if authorize to enter
+	if (req.session.hrOpen === undefined) return res.send('Unathorized access');
+	
 	var hrRequests = [];
 
 	//Callback 1
@@ -1130,6 +1152,10 @@ app.get('/hr-search/', function (req, res) {
 
 //show one request, hr side
 app.get('/hr-id/:id', function (req, res) {
+	
+	//Go to session and check if authorize to enter
+	if (req.session.hrOpen === undefined) return res.send('Unathorized access');
+	
 	var paramsUrl = req.params.id;
 
 	//
@@ -1213,6 +1239,9 @@ app.get('/hr-responded', function (req, res) {
 //Ceo
 //All request, ceo side
 app.get('/ceo-all', function (req, res) {
+	
+	//Go to session and check if authorize to enter
+	if (req.session.ceoOpen === undefined) return res.send('Unathorized access');
 	
 	//Callback 1
 	Requests.find({}, function (error, allRequest) {
@@ -1353,6 +1382,10 @@ app.get('/ceo-search/', function (req, res) {
 
 //show
 app.get('/ceo-id/:id', function (req, res) {
+	
+	//Go to session and check if authorize to enter
+	if (req.session.ceoOpen === undefined) return res.send('Unathorized access');
+	
 	var paramsUrl = req.params.id;
 
 	//
