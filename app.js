@@ -972,7 +972,6 @@ app.put('/bu-id/:id', function (req, res) {
 						from: '"Manpower Requisition Form" <companynodemailer@gmail.com>',
 						to: requestorEmailDeclined,
 						subject: 'REQUEST DECLINED',
-						//text: 'Mrf control number: 123456'
 						html:
 							'<p>Manpower request is declined, <br> Control number: ' +
 							controlNumber +
@@ -1217,9 +1216,9 @@ app.put('/hr-id/:id', function (req, res) {
 					var mailOptions = {
 						from: '"Manpower Requisition Form" <companynodemailer@gmail.com>',
 						to: declinedEmails,
-						subject: 'Waiting for response',
+						subject: 'REQUEST DECLINED',
 						html:
-							'<p>Manpower request is waiting for response, <br> Control number: ' +
+							'<p>Manpower request is declined, <br> Control number: ' +
 							controlNumber +
 							' <br><br><br> Visit the link <a href=' +
 							url +
