@@ -93,33 +93,29 @@ var Requests = mongoose.model('Requests', requestsSchema);
 //ROUTES
 //root
 app.get('/', function (req, res) {
-	// nodemailer is copied from w3schools
 
 	res.render('landing');
 });
 
 //login
 app.get('/login', function (req, res) {
-	
 	//if they are done logged in they can now redirect
-	if (req.session.requestorOpen === true){
-		return res.redirect('/requestor-create')
+	if (req.session.requestorOpen === true) {
+		return res.redirect('/requestor-create');
 	}
-	
-	if (req.session.buOpen === true){
-		return res.redirect('/bu-all')
+
+	if (req.session.buOpen === true) {
+		return res.redirect('/bu-all');
 	}
-	
-	if (req.session.hrOpen === true){
-		return res.redirect('/hr-all')
+
+	if (req.session.hrOpen === true) {
+		return res.redirect('/hr-all');
 	}
-	
-	if (req.session.ceoOpen === true){
-		return res.redirect('/ceo-all')
+
+	if (req.session.ceoOpen === true) {
+		return res.redirect('/ceo-all');
 	}
-	
-	
-	
+
 	//Session for incorrect credentials
 	if (req.session.incorrectCredentialsFaker === true) {
 		req.session.incorrectCredentials = true;
@@ -985,34 +981,32 @@ app.put('/bu-id/:id', function (req, res) {
 
 						console.log('Email sent: ' + info.response);
 
-						return res.redirect('/bu-responded');
+						res.redirect('/bu-responded');
+					});
+				} else {
+					//If Bu approval is approved
+					var mailOptions = {
+						from: '"Manpower Requisition Form" <companynodemailer@gmail.com>',
+						to: hrEmails,
+						subject: 'Waiting for response',
+						//text: 'Mrf control number: 123456'
+						html:
+							'<p>Manpower request is waiting for response, <br> Control number: ' +
+							controlNumber +
+							' <br><br><br> Visit the link <a href=' +
+							url +
+							'>here</a> </p>',
+					};
+
+					transporter.sendMail(mailOptions, function (error, info) {
+						//If there's potential error
+						if (error) return res.send('Something went wrong');
+
+						console.log('Email sent: ' + info.response);
+
+						res.redirect('/bu-responded');
 					});
 				}
-				//End, if Bu approval is declined
-
-				//
-				var mailOptions = {
-					from: '"Manpower Requisition Form" <companynodemailer@gmail.com>',
-					to: hrEmails,
-					subject: 'Waiting for response',
-					//text: 'Mrf control number: 123456'
-					html:
-						'<p>Manpower request is waiting for response, <br> Control number: ' +
-						controlNumber +
-						' <br><br><br> Visit the link <a href=' +
-						url +
-						'>here</a> </p>',
-				};
-
-				transporter.sendMail(mailOptions, function (error, info) {
-					//If there's potential error
-					if (error) return res.send('Something went wrong');
-
-					console.log('Email sent: ' + info.response);
-
-					res.redirect('/bu-responded');
-				});
-				// End of nodemailer
 			});
 			// End of callback 3
 		});
@@ -1230,30 +1224,30 @@ app.put('/hr-id/:id', function (req, res) {
 
 						console.log('Email sent: ' + info.response);
 
-						return res.redirect('/hr-responded');
+						res.redirect('/hr-responded');
+					});
+				} else {
+					//If hr approval is approved
+					var mailOptions = {
+						from: '"Manpower Requisition Form" <companynodemailer@gmail.com>',
+						to: ceoEmail,
+						subject: 'Waiting for response',
+						html:
+							'<p>Manpower request is waiting for response, <br> Control number: ' +
+							controlNumber +
+							' <br><br><br> Visit the link <a href=' +
+							url +
+							'>here</a> </p>',
+					};
+
+					transporter.sendMail(mailOptions, function (error, info) {
+						if (error) return res.send('Something went wrong');
+
+						console.log('Email sent: ' + info.response);
+
+						res.redirect('/hr-responded');
 					});
 				}
-
-				var mailOptions = {
-					from: '"Manpower Requisition Form" <companynodemailer@gmail.com>',
-					to: ceoEmail,
-					subject: 'Waiting for response',
-					html:
-						'<p>Manpower request is waiting for response, <br> Control number: ' +
-						controlNumber +
-						' <br><br><br> Visit the link <a href=' +
-						url +
-						'>here</a> </p>',
-				};
-
-				transporter.sendMail(mailOptions, function (error, info) {
-					if (error) return res.send('Something went wrong');
-
-					console.log('Email sent: ' + info.response);
-
-					res.redirect('/hr-responded');
-				});
-				// End of nodemailer
 			});
 			// End of callback 3
 		});
@@ -1477,31 +1471,29 @@ app.put('/ceo-id/:id', function (req, res) {
 					},
 				});
 
-				for (var i = 0; i < receivingEmails.length; i++) {
-					var mailOptions = {
-						from: '"Manpower Requisition Form" <companynodemailer@gmail.com>',
-						to: receivingEmails[i],
-						subject: eSubject,
-						html:
-							'<p>Manpower request is ' +
-							eBody +
-							', <br> Control number: ' +
-							controlNumber +
-							' <br><br><br> Visit the link <a href=' +
-							url +
-							'>here</a> </p>',
-					};
+				var mailOptions = {
+					from: '"Manpower Requisition Form" <companynodemailer@gmail.com>',
+					to: receivingEmails,
+					subject: eSubject,
+					html:
+						'<p>Manpower request is ' +
+						eBody +
+						', <br> Control number: ' +
+						controlNumber +
+						' <br><br><br> Visit the link <a href=' +
+						url +
+						'>here</a> </p>',
+				};
 
-					transporter.sendMail(mailOptions, function (error, info) {
-						//If there's potential error
-						if (error) return res.send('Something went wrong');
+				transporter.sendMail(mailOptions, function (error, info) {
+					//If there's potential error
+					if (error) return res.send('Something went wrong');
 
-						console.log('Email sent: ' + info.response);
-					});
-					// End of nodemailer
-				}
+					console.log('Email sent: ' + info.response);
 
-				res.redirect('/ceo-responded');
+					res.redirect('/ceo-responded');
+				});
+				// End of nodemailer
 			});
 			// End of callback 3
 		});
