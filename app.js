@@ -99,6 +99,8 @@ app.get('/', function (req, res) {
 
 //login
 app.get('/login', function (req, res) {
+	
+	// Under development mode...
 	//if they are done logged in they can now redirect
 	if (req.session.requestorOpen === true) {
 		return res.redirect('/requestor-create');
@@ -115,6 +117,7 @@ app.get('/login', function (req, res) {
 	if (req.session.ceoOpen === true) {
 		return res.redirect('/ceo-all');
 	}
+	// Under development mode...
 
 	//Session for incorrect credentials
 	if (req.session.incorrectCredentialsFaker === true) {
@@ -563,7 +566,7 @@ app.post('/requestor-create', function (req, res) {
 			// nodemailer
 			// nodemailer starts here
 			var controlNumber = generateID;
-			var url = 'https://mrf-ixndk.run-us-west2.goorm.io/';
+			var url = 'https://mrf-ixndk.run-us-west2.goorm.io/bu-id/' + controlNumber;
 
 			var transporter = nodemailer.createTransport({
 				service: 'gmail',
@@ -725,8 +728,9 @@ app.get('/requestor-search/', function (req, res) {
 
 //Show one request, requestor side
 app.get('/requestor-id/:id', function (req, res) {
+	
 	//Go to session and check if authorize to enter
-	if (req.session.requestorOpen === undefined) return res.send('Unathorized access');
+	if (req.session.requestorOpen === undefined) return res.redirect('/');
 
 	var sendOneRequest = undefined;
 	var paramsUrl = req.params.id;
@@ -890,8 +894,9 @@ app.get('/bu-search/', function (req, res) {
 //Show one request, Bu side
 //bu-id
 app.get('/bu-id/:id', function (req, res) {
+	
 	//Go to session and check if authorize to enter
-	if (req.session.buOpen === undefined) return res.send('Unathorized access');
+	if (req.session.buOpen === undefined) return res.redirect('/');
 
 	var sendOneRequest = undefined;
 	var paramsUrl = req.params.id;
@@ -952,7 +957,15 @@ app.put('/bu-id/:id', function (req, res) {
 
 				// nodemailer starts here
 				var controlNumber = paramsUrl;
-				var url = 'https://mrf-ixndk.run-us-west2.goorm.io/';
+				var url = undefined
+				
+				if (req.body.buApproval === "Approve"){
+					url = 'https://mrf-ixndk.run-us-west2.goorm.io/hr-id/' + controlNumber;
+				} else {
+					url = 'https://mrf-ixndk.run-us-west2.goorm.io/requestor-id/' + controlNumber;
+				}
+				
+				
 
 				var transporter = nodemailer.createTransport({
 					service: 'gmail',
@@ -1144,8 +1157,9 @@ app.get('/hr-search/', function (req, res) {
 
 //show one request, hr side
 app.get('/hr-id/:id', function (req, res) {
+	
 	//Go to session and check if authorize to enter
-	if (req.session.hrOpen === undefined) return res.send('Unathorized access');
+	if (req.session.hrOpen === undefined) return res.redirect('/');
 
 	var paramsUrl = req.params.id;
 
@@ -1191,7 +1205,15 @@ app.put('/hr-id/:id', function (req, res) {
 
 				// nodemailer starts here
 				var controlNumber = paramsUrl;
-				var url = 'https://mrf-ixndk.run-us-west2.goorm.io/';
+				var url = undefined
+				
+				if (req.body.hrApproval === "Approve"){
+					url = 'https://mrf-ixndk.run-us-west2.goorm.io/ceo-id/' + controlNumber;
+				} else {
+					url = 'https://mrf-ixndk.run-us-west2.goorm.io/';
+				}
+				
+				
 
 				var transporter = nodemailer.createTransport({
 					service: 'gmail',
@@ -1393,8 +1415,9 @@ app.get('/ceo-search/', function (req, res) {
 
 //show
 app.get('/ceo-id/:id', function (req, res) {
+	
 	//Go to session and check if authorize to enter
-	if (req.session.ceoOpen === undefined) return res.send('Unathorized access');
+	if (req.session.ceoOpen === undefined) return res.redirect('/');
 
 	var paramsUrl = req.params.id;
 
