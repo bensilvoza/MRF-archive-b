@@ -1,4 +1,39 @@
 
+ /* Mobile and tablet responsiveness message */
+@media screen and (min-width: 100px) and (max-width: 1299px) {
+	
+/* styling starts here */
+	
+	.hide-me {
+		display: none;
+	}
+	
+/* end here */
+}
+
+
+
+/* spacing... */
+
+
+
+
+@media screen and (min-width: 1300px) and (max-width: 1920px) {
+	
+/* styling starts here */
+	.mobile-tablet-responsiveness-message {
+	    display: none;
+     }
+	
+/* end here */
+}
+
+/* Media queries... */
+
+
+
+
+
 
 /* landing */
 .landing-box {
@@ -38,9 +73,6 @@
 .landing-go-request-h6:hover {
 	color: white;
 }
-
-
-
 
 
 

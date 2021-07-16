@@ -17,128 +17,134 @@
 		<title>Manpower Requisition Form</title>
 	</head>
 	<body>
-		<!-- Bootstrap icon   
-	<div class="text-center">
-	<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-layout-text-sidebar-reverse" viewBox="0 0 16 16">
-      <path d="M12.5 3a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5zm0 3a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5zm.5 3.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm-.5 2.5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1h5z"/>
-      <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2zM4 1v14H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h2zm1 0h9a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5V1z"/>
-    </svg>  
-	</div>  	
-	-->
-
-		<!-- back arrow -->
-		<div
-			class="login-back-arrow d-inline-block"
-			onclick="location.href='/login';"
-			style="cursor: pointer;"
-		>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				width="30"
-				height="30"
-				fill="currentColor"
-				class="bi bi-chevron-left"
-				viewBox="0 0 16 16"
-			>
-				<path
-					fill-rule="evenodd"
-					d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
-				/>
-			</svg>
-		</div>
-
-		<!-- <h2 class="mt-5 text-center">Manpower Requisition Form</h2> -->
-
-		<h2 class="mt-5 text-center">Create Account</h2>
-		<p class="text-center">
-			Create account and approved request.
-		</p>
-
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-md-4">
-					
-					<!-- Session for incorrect details -->
-					<% if (incorrectDetails){ %>
-					<div class="alert alert-danger alert-dismissible fade show" role="alert">
-						Incorrect Details
-						<button
-							type="button"
-							class="btn-close"
-							data-bs-dismiss="alert"
-							aria-label="Close"
-						></button>
-					</div>
-					<% } %>
-					<!-- End of session for incorrect details -->
-					
-					
-					<!-- Session for account successfully created -->
-					<% if (account){ %>
-					<div class="alert alert-success alert-dismissible fade show" role="alert">
-						Account successfully created!
-						<button
-							type="button"
-							class="btn-close"
-							data-bs-dismiss="alert"
-							aria-label="Close"
-						></button>
-					</div>
-					<% } %>
-					<!-- End of session for account successfully created -->
-					
-					
-					<!-- Session for weak password -->
-					<% if (weakPassword){ %>
-					<div class="alert alert-danger alert-dismissible fade show" role="alert">
-						Password atleast 6 characters long
-						<button
-							type="button"
-							class="btn-close"
-							data-bs-dismiss="alert"
-							aria-label="Close"
-						></button>
-					</div>
-					<% } %>
-					<!-- End of session for weak password -->
-					
-
-					<form action="/register" method="post" autocomplete="off">
-						<div class="form-group">
-							<input
-								class="form-control form-control-lg"
-								type="text"
-								name="email"
-								placeholder="Email"
-							/>
-						</div>
-
-						<div class="mt-2 form-group">
-							<input
-								class="form-control form-control-lg"
-								type="password"
-								name="password"
-								placeholder="Password"
-							/>
-						</div>
-						<div class="mt-2 form-group">
-							<input
-								class="form-control form-control-lg"
-								type="password"
-								name="confirmPassword"
-								placeholder="Confirm Password"
-							/>
-						</div>
-
-						<div class="d-grid">
-							<button class="mt-2 btn btn-lg btn-secondary" type="submit">
-								Create
-							</button>
-						</div>
-					</form>
+		<!-- Mobile and tablet responsiveness message -->
+		<div class="container mobile-tablet-responsiveness-message">
+			<div class="row d-flex justify-content-center">
+				<div class="col-md-10" style="border-bottom: 4px solid lightgray;">
+					<h4 style="margin-top: 10rem;">
+						We're working our best to make this website readable on mobile and tablet
+						devices.
+					</h4>
 				</div>
 			</div>
 		</div>
+		<!-- End mobile and tablet responsiveness message -->
+
+		<!-- hide-me -->
+		<div class="hide-me">
+			
+			
+			<!-- back arrow -->
+			<div
+				class="login-back-arrow d-inline-block"
+				onclick="location.href='/login';"
+				style="cursor: pointer;"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="30"
+					height="30"
+					fill="currentColor"
+					class="bi bi-chevron-left"
+					viewBox="0 0 16 16"
+				>
+					<path
+						fill-rule="evenodd"
+						d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"
+					/>
+				</svg>
+			</div>
+
+			<!-- <h2 class="mt-5 text-center">Manpower Requisition Form</h2> -->
+
+			<h2 class="mt-5 text-center">Create Account</h2>
+			<p class="text-center">
+				Create account and approved request.
+			</p>
+
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-md-4">
+						<!-- Session for incorrect details -->
+						<% if (incorrectDetails){ %>
+						<div class="alert alert-danger alert-dismissible fade show" role="alert">
+							Incorrect Details
+							<button
+								type="button"
+								class="btn-close"
+								data-bs-dismiss="alert"
+								aria-label="Close"
+							></button>
+						</div>
+						<% } %>
+						<!-- End of session for incorrect details -->
+
+						<!-- Session for account successfully created -->
+						<% if (account){ %>
+						<div class="alert alert-success alert-dismissible fade show" role="alert">
+							Account successfully created!
+							<button
+								type="button"
+								class="btn-close"
+								data-bs-dismiss="alert"
+								aria-label="Close"
+							></button>
+						</div>
+						<% } %>
+						<!-- End of session for account successfully created -->
+
+						<!-- Session for weak password -->
+						<% if (weakPassword){ %>
+						<div class="alert alert-danger alert-dismissible fade show" role="alert">
+							Password atleast 6 characters long
+							<button
+								type="button"
+								class="btn-close"
+								data-bs-dismiss="alert"
+								aria-label="Close"
+							></button>
+						</div>
+						<% } %>
+						<!-- End of session for weak password -->
+
+						<form action="/register" method="post" autocomplete="off">
+							<div class="form-group">
+								<input
+									class="form-control form-control-lg"
+									type="text"
+									name="email"
+									placeholder="Email"
+								/>
+							</div>
+
+							<div class="mt-2 form-group">
+								<input
+									class="form-control form-control-lg"
+									type="password"
+									name="password"
+									placeholder="Password"
+								/>
+							</div>
+							<div class="mt-2 form-group">
+								<input
+									class="form-control form-control-lg"
+									type="password"
+									name="confirmPassword"
+									placeholder="Confirm Password"
+								/>
+							</div>
+
+							<div class="d-grid">
+								<button class="mt-2 btn btn-lg btn-secondary" type="submit">
+									Create
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- hide-me -->
 
 		<!-- JavaScript Bundle with Popper -->
 		<script
