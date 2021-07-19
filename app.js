@@ -93,7 +93,7 @@ var Requests = mongoose.model('Requests', requestsSchema);
 //ROUTES
 //root
 app.get('/', function (req, res) {
-
+    
 	res.render('landing');
 });
 
@@ -773,6 +773,17 @@ app.get('/requestor-delete', function (req, res) {
 	res.render('requestor-delete');
 });
 
+// LOG OUT, requestor
+app.get ("/requestor-logout", function (req, res){
+	
+	//update session
+	req.session.requestorOpen = undefined
+	
+	res.redirect("/login")
+})
+
+
+
 //======================================
 //Bu
 //bu-all
@@ -1033,6 +1044,18 @@ app.get('/bu-responded', function (req, res) {
 	res.render('bu-responded');
 });
 
+// LOG OUT, bu
+app.get ("/bu-logout", function (req, res){
+	
+	//update session
+	req.session.buOpen = undefined
+	
+	res.redirect("/login")
+})
+
+
+
+
 //======================================
 //Hr
 //All request, Hr side
@@ -1283,6 +1306,18 @@ app.get('/hr-responded', function (req, res) {
 	res.render('hr-responded');
 });
 
+// LOG OUT, hr
+app.get ("/hr-logout", function (req, res){
+	
+	//update session
+	req.session.hrOpen = undefined
+	
+	res.redirect("/login")
+})
+
+
+
+
 //======================================
 //Ceo
 //All request, ceo side
@@ -1528,6 +1563,18 @@ app.put('/ceo-id/:id', function (req, res) {
 app.get('/ceo-responded', function (req, res) {
 	res.render('ceo-responded');
 });
+
+// LOG OUT, ceo
+app.get ("/ceo-logout", function (req, res){
+	
+	//update session
+	req.session.ceoOpen = undefined
+	
+	res.redirect("/login")
+})
+
+
+
 
 //app.listen
 //process.env.PORT, process.env.IP
